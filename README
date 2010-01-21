@@ -1,0 +1,44 @@
+django-postal
+============
+
+A django application that provides a location agnostic model for postal addresses.
+
+
+Dependencies
+============
+
+django-countries (http://code.google.com/p/django-countries/)
+
+
+Usage
+=====
+
+1. Add django-countries and django-postal to your INSTALLED_APPS in settings.py
+e.g.
+
+INSTALLED_APPS = (
+    "countries",
+    "postal",
+    )
+
+2. In your view code import PostalAddressForm for display
+
+views.py
+from postal.forms import PostalAddressForm
+
+postal_form = PostalForm()
+
+3. Add PostalAddressForm to your templates
+
+{{postal_form|localize:country_code}}
+
+
+
+TODO 
+1. Create model
+
+2. Create localizations
+
+3. Create method of localizing a form
+	a) Registry match with regular expressions cf urls.py
+	b) A templatetag e.g. {{postal_form|localize:country_code}}
