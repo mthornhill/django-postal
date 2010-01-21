@@ -4,9 +4,8 @@ from django.template import RequestContext
 from forms import PostalAddressForm
 from library import country_map
 
-def test_postal(request, country_code="ie"):
-    form_class = country_map.get(country_code, PostalAddressForm)
-    form = form_class()
-        
-    context = RequestContext(request, locals())    
-    return render_to_response('postal/test.html', context)
+
+def get_postal_form_class(country_code):
+    return country_map.get(country_code, PostalAddressForm)
+
+

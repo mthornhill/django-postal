@@ -1,6 +1,7 @@
-import ie
+import ie, de
 
-country_map = { "ie": ie.IEPostalAddressForm,
+country_map = {"de": de.DEPostalAddressForm, 
+               "ie": ie.IEPostalAddressForm,
                 
               }
 
