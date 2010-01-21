@@ -1,4 +1,3 @@
-""" from http://www.bitboost.com/ref/international-address-formats.html#Great-Britain"""
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.localflavor.de.forms import DEZipCodeField, DEStateSelect

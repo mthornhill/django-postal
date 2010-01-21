@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.utils.translation import ugettext
 
 from postal.views import get_postal_form_class
 
