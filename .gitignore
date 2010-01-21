@@ -2,9 +2,13 @@
 *.pyo
 .installed.cfg
 bin
+include
+lib
 develop-eggs
 dist
 downloads
 eggs
 parts
 src/*.egg-info
+.project
+.pydevproject
