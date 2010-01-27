@@ -3,6 +3,34 @@ django-postal
 
 A django application that provides a location agnostic model for postal addresses.
 
+The motivation behind this project is that most countries have different forms of
+postal addresses e.g. http://www.bitboost.com/ref/international-address-formats.html
+
+This app assumes that all postal addresses worldwide can be made up of 5 optional
+address lines plus a country code.
+
+It then localizes the title of each line dependant on the country selected.
+Further information on each address line can be gleaned from 
+django.contrib.localflavor fields and widgets e.g. for the UK
+
+from django import forms
+from django.utils.translation import ugettext_lazy as _
+from django.contrib.localflavor.uk.forms import UKPostcodeField, UKCountySelect
+
+from postal.forms import PostalAddressForm
+
+class GBPostalAddressForm(PostalAddressForm):
+    line1 = forms.CharField(label=_(u"Company name"), required=False, max_length=50)
+    line2 = forms.CharField(label=_(u"Street"), max_length=50)
+    line3 = forms.CharField(label=_(u"Town"), max_length=50)
+    line4 = UKPostcodeField(label=_(u"Postcode"))
+    line5 = forms.CharField(label=_(u"County"), widget=UKCountySelect, max_length=50)
+
+
+It is hoped that various contributors will contribute address formats per country
+and that eventually this address information could find it's way back in to
+django.contrib.localflavor
+
 
 Dependencies
 ============
@@ -10,7 +38,7 @@ Dependencies
 django-countries (http://code.google.com/p/django-countries/)
 
 
-Developers
+Developers, How to Contribute
 ==========
 $ git clone git@github.com:mthornhill/django-postal.git
 $ cd django-postal
@@ -23,6 +51,11 @@ $ bin/django runserver
 
 browse to http://localhost:8000
 
+new countries can be added to the src/postal folder by their 
+2 letter country code e.g. us
+
+Each country folder contains an __init__.py and a forms.py
+forms.py contains the localized address
 
 Usage
 =====
@@ -35,24 +68,28 @@ INSTALLED_APPS = (
     "postal",
     )
 
-2. In your view code import PostalAddressForm for display
+2. In your view code import the code for getting a localized postal address
 
 views.py
-from postal.forms import PostalAddressForm
+from postal.views import get_postal_form_class
 
-postal_form = PostalForm()
+form_class = get_postal_form_class("us")
+postal_form = form_class()
 
-3. Add PostalAddressForm to your templates
+3. Add postal_form to your templates
 
-{{postal_form|localize:country_code}}
+some_template.html
+{{postal_form}}
+
+4. In this case we will have a US postal form
 
 
 
 TODO 
-1. Create model
 
-2. Create localizations
-
-3. Create method of localizing a form
+1. Create method of allowning third party app to register a localized postal form
 	a) Registry match with regular expressions cf urls.py
-	b) A templatetag e.g. {{postal_form|localize:country_code}}
+	b) admin site approach
+	
+2. Templatetag for modifying a form in a template
+	e.g. {{postal_form|localize:country_code}}
