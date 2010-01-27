@@ -11,3 +11,7 @@ class USPostalAddressForm(PostalAddressForm):
     line3 = USZipCodeField(label=_(u"Zip Code"))
     line4 = forms.CharField(label=_(u"City"), max_length=50)
     line5 = USStateField(label=_(u"US State"), widget=USStateSelect)
+
+    def __init__(self, *args, **kwargs):
+        super(USPostalAddressForm, self).__init__(*args, **kwargs)
+        self.fields['country'].initial = "US"

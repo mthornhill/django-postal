@@ -5,6 +5,14 @@
 <title>Postal Test</title>
 </head>
 <body>
+
+<ul>
+{% for c in countries %}
+<li><a href="/test_postal/?country_code={{c}}">{{c}}</a></li>
+{% endfor %}
+
+</ul>
+
 <table>
 {{form.as_table}}
 </table>

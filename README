@@ -46,6 +46,7 @@ $ virtualenv . --no-site-packages
 $ source bin/activate
 $ python bootstrap.py
 $ bin/buildout -v
+$ bin/django syncdb
 $ bin/test
 $ bin/django runserver
 

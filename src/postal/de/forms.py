@@ -10,3 +10,7 @@ class DEPostalAddressForm(PostalAddressForm):
     line3 = DEZipCodeField(label=_(u"Zip Code"))
     line4 = forms.CharField(label=_(u"City"), max_length=50)
     line5 = forms.CharField(label=_(u"State"), widget=DEStateSelect)
+
+    def __init__(self, *args, **kwargs):
+        super(DEPostalAddressForm, self).__init__(*args, **kwargs)
+        self.fields['country'].initial = "DE"
