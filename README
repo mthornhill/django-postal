@@ -10,6 +10,20 @@ Dependencies
 django-countries (http://code.google.com/p/django-countries/)
 
 
+Developers
+==========
+$ git clone git@github.com:mthornhill/django-postal.git
+$ cd django-postal
+$ virtualenv . --no-site-packages
+$ source bin/activate
+$ python bootstrap.py
+$ bin/buildout -v
+$ bin/test
+$ bin/django runserver
+
+browse to http://localhost:8000
+
+
 Usage
 =====
 
