@@ -4,7 +4,8 @@ django-postal
 A django application that provides a location agnostic model for postal addresses.
 
 The motivation behind this project is that most countries have different forms of
-postal addresses e.g. http://www.bitboost.com/ref/international-address-formats.html
+postal addresses e.g. http://www.bitboost.com/ref/international-address-formats.html , 
+http://en.wikipedia.org/wiki/Address_%28geography%29
 
 This app assumes that all postal addresses worldwide can be made up of 5 optional
 address lines plus a country code.
