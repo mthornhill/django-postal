@@ -52,11 +52,11 @@ except ImportError, e:
 
 
 class IEPostalAddressForm(PostalAddressForm):
-    line1 = forms.CharField(label=_(u"Address 1"), max_length=50)
-    line2 = forms.CharField(label=_(u"Address 2"), max_length=50, required=False)
-    line3 = forms.CharField(label=_(u"Address 3"), max_length=50, required=False)
-    line4 = forms.CharField(label=_(u"Town"), max_length=50)
-    line5 = forms.CharField(label=_(u"County"), widget=IECountySelect(), max_length=50)
+    line1 = forms.CharField(label=_(u"Address 1"), max_length=100)
+    line2 = forms.CharField(label=_(u"Address 2"), max_length=100, required=False)
+    line3 = forms.CharField(label=_(u"Address 3"), max_length=100, required=False)
+    line4 = forms.CharField(label=_(u"Town"), max_length=100, required=False)
+    line5 = forms.CharField(label=_(u"County"), widget=IECountySelect(), max_length=100)
 
     def __init__(self, *args, **kwargs):
         super(IEPostalAddressForm, self).__init__(*args, **kwargs)
