@@ -8,9 +8,9 @@ from postal.forms import PostalAddressForm
 class USPostalAddressForm(PostalAddressForm):
     line1 = forms.CharField(label=_(u"Company name"), required=False, max_length=50)
     line2 = forms.CharField(label=_(u"Street"), max_length=100)
-    line3 = USZipCodeField(label=_(u"Zip Code"))
-    line4 = forms.CharField(label=_(u"City"), max_length=50)
-    line5 = USStateField(label=_(u"US State"), widget=USStateSelect)
+    line3 = forms.CharField(label=_(u"City"), max_length=50)
+    line4 = USStateField(label=_(u"US State"), widget=USStateSelect)
+    line5 = USZipCodeField(label=_(u"Zip Code"))
 
     def __init__(self, *args, **kwargs):
         super(USPostalAddressForm, self).__init__(*args, **kwargs)

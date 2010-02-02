@@ -20,9 +20,9 @@ class PostalTests(TestCase):
         
         self.assertEqual(form.fields['line1'].label, "Company name")
         self.assertEqual(form.fields['line2'].label, "Street")
-        self.assertEqual(form.fields['line3'].label, "Zip Code")
-        self.assertEqual(form.fields['line4'].label, "City")
-        self.assertEqual(form.fields['line5'].label, "State")
+        self.assertEqual(form.fields['line3'].label, "City")
+        self.assertEqual(form.fields['line4'].label, "State")
+        self.assertEqual(form.fields['line5'].label, "Zip Code")
     
     def test_get_ie_address(self):
         """
@@ -33,10 +33,10 @@ class PostalTests(TestCase):
 
         form = irish_form_class()
         
-        self.assertEqual(form.fields['line1'].label, "Address 1")
-        self.assertEqual(form.fields['line2'].label, "Address 2")
-        self.assertEqual(form.fields['line3'].label, "Address 3")
-        self.assertEqual(form.fields['line4'].label, "Town")
+        self.assertEqual(form.fields['line1'].label, "House/Company name")
+        self.assertEqual(form.fields['line2'].label, "Street")
+        self.assertEqual(form.fields['line3'].label, "Area")
+        self.assertEqual(form.fields['line4'].label, "Town/City")
         self.assertEqual(form.fields['line5'].label, "County")
     
     
@@ -51,7 +51,7 @@ class PostalTests(TestCase):
         
         self.assertEqual(form.fields['line1'].label, "Company name")
         self.assertEqual(form.fields['line2'].label, "Street")
-        self.assertEqual(form.fields['line3'].label, "Zip Code")
-        self.assertEqual(form.fields['line4'].label, "City")
-        self.assertEqual(form.fields['line5'].label, "State")
+        self.assertEqual(form.fields['line3'].label, "City")
+        self.assertEqual(form.fields['line4'].label, "State")
+        self.assertEqual(form.fields['line5'].label, "Zip Code")
     

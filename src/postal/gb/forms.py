@@ -7,11 +7,11 @@ from countries.models import Country
 from postal.forms import PostalAddressForm
 
 class GBPostalAddressForm(PostalAddressForm):
-    line1 = forms.CharField(label=_(u"Company name"), required=False, max_length=50)
-    line2 = forms.CharField(label=_(u"Street"), max_length=50)
-    line3 = forms.CharField(label=_(u"Town"), max_length=50)
-    line4 = UKPostcodeField(label=_(u"Postcode"))
-    line5 = forms.CharField(label=_(u"County"), widget=UKCountySelect, max_length=50)
+    line1 = forms.CharField(label=_(u"Company name"), required=False, max_length=100)
+    line2 = forms.CharField(label=_(u"Street"), max_length=100)
+    line3 = forms.CharField(label=_(u"Town"), max_length=100)
+    line4 = forms.CharField(label=_(u"County"), widget=UKCountySelect, max_length=100)
+    line5 = UKPostcodeField(label=_(u"Postcode"))
 
     def __init__(self, *args, **kwargs):
         super(GBPostalAddressForm, self).__init__(*args, **kwargs)
