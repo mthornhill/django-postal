@@ -4,7 +4,6 @@ DATABASE_NAME = '/tmp/postal.db'
 INSTALLED_APPS = ['django.contrib.admin',
                   'django.contrib.auth',
                   'django.contrib.contenttypes',
-                  'django.contrib.gis',
                   'django.contrib.sessions',
                   'countries',
                   'postal',]
