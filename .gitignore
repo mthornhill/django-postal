@@ -13,3 +13,4 @@ src/*.egg-info
 .project
 .pydevproject
 .settings
+pysqlite2-doc
