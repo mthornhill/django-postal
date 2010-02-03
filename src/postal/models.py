@@ -23,5 +23,5 @@ class PostalAddress(models.Model):
     #objects = gis_models.GeoManager()
 
     def __unicode__(self):
-        return "%s / %s" % (self.line1, self.line2, self.country)
+        return "%s %s, %s" % (self.firstname, self.lastname, self.country)
 
