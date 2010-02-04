@@ -2,9 +2,11 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from models import PostalAddress
-from settings import POSTAL_ADDRESS_LINE1, POSTAL_ADDRESS_LINE2, POSTAL_ADDRESS_LINE3, POSTAL_ADDRESS_LINE4, POSTAL_ADDRESS_LINE5
+from settings import POSTAL_ADDRESS_FIRSTNAME, POSTAL_ADDRESS_LASTNAME, POSTAL_ADDRESS_LINE1, POSTAL_ADDRESS_LINE2, POSTAL_ADDRESS_LINE3, POSTAL_ADDRESS_LINE4, POSTAL_ADDRESS_LINE5
 
 class PostalAddressForm(forms.ModelForm):
+    firstname = forms.CharField(label=POSTAL_ADDRESS_FIRSTNAME[0], required=POSTAL_ADDRESS_FIRSTNAME[1], max_length=100)
+    lastname = forms.CharField(label=POSTAL_ADDRESS_LASTNAME[0], required=POSTAL_ADDRESS_LASTNAME[1], max_length=100)
     line1 = forms.CharField(label=POSTAL_ADDRESS_LINE1[0], required=POSTAL_ADDRESS_LINE1[1], max_length=100)
     line2 = forms.CharField(label=POSTAL_ADDRESS_LINE2[0], required=POSTAL_ADDRESS_LINE2[1], max_length=100)
     line3 = forms.CharField(label=POSTAL_ADDRESS_LINE3[0], required=POSTAL_ADDRESS_LINE3[1], max_length=100)
