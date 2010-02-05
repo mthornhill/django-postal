@@ -4,15 +4,18 @@ from django.template import RequestContext
 
 from postal.forms import PostalAddressForm
 
-from ie.forms import IEPostalAddressForm
 from de.forms import DEPostalAddressForm
 from gb.forms import GBPostalAddressForm
+from ie.forms import IEPostalAddressForm
+from nl.forms import NLPostalAddressForm
 from us.forms import USPostalAddressForm
 
 
-country_map = {"de": DEPostalAddressForm, 
-               "ie": IEPostalAddressForm,
+
+country_map = {"de": DEPostalAddressForm,
                "gb": GBPostalAddressForm,
+               "ie": IEPostalAddressForm,
+               "nl": NLPostalAddressForm,
                "us": USPostalAddressForm,
               }
 

@@ -15,7 +15,7 @@ class PostalAddressForm(forms.ModelForm):
 
     class Meta:
         model = PostalAddress
-        exclude = ('location')
+        exclude = ['location',]
         
     def __unicode__(self):
         return self.line1 + ', ' + self.line2 + ', ' + self.line3 + self.line4 + ', ', + self.line5 + ', ' + self.country
