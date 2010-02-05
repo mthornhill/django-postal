@@ -22,7 +22,7 @@ class PostalTests(TestCase):
         self.assertNotEqual(german_form_class, None)
         
         # only use required fields
-        test_data = {'line4': 'BE', 'line5': '12345',}
+        test_data = {'firstname': 'bob', 'lastname': 'ajob', 'line4': 'BE', 'line5': '12345',}
         form = german_form_class(data=test_data)
         
         self.assertEqual(form.fields['line1'].label, "Company name")
@@ -42,15 +42,14 @@ class PostalTests(TestCase):
         self.assertNotEqual(irish_form_class, None)
 
         # only use required fields
-        test_data = {'line2': 'street', 'line4': 'Tullamore',
-                     'line5': 'offaly',  }
+        test_data = {'firstname': 'bob', 'lastname': 'ajob', 'line1': 'street', 'line3': 'Tullamore',
+                     'line4': 'offaly',  }
         form = irish_form_class(data=test_data)
         
-        self.assertEqual(form.fields['line1'].label, "House/Company name")
-        self.assertEqual(form.fields['line2'].label, "Street")
-        self.assertEqual(form.fields['line3'].label, "Area")
-        self.assertEqual(form.fields['line4'].label, "Town/City")
-        self.assertEqual(form.fields['line5'].label, "County")
+        self.assertEqual(form.fields['line1'].label, "Street")
+        self.assertEqual(form.fields['line2'].label, "Area")
+        self.assertEqual(form.fields['line3'].label, "Town/City")
+        self.assertEqual(form.fields['line4'].label, "County")
         form.save()
         self.assertEqual(PostalAddress.objects.count(), 1)
     
@@ -69,15 +68,6 @@ class PostalTests(TestCase):
         self.assertEqual(form.fields['line4'].label, "State")
         self.assertEqual(form.fields['line5'].label, "Zip code")
 
-    def test_save_blank_address(self):
-        """
-        Tests that we can save an empty PostalAddressForm
-        """
-        self.assertEqual(PostalAddress.objects.count(), 0)
-        form = postal.forms.PostalAddressForm(data={})
-        form.save()
-        self.assertEqual(PostalAddress.objects.count(), 1)
-
     def test_set_default_address(self):
         # change line1 label and make it required
         postal.settings.POSTAL_ADDRESS_LINE1 = ('Crazy address label', True)
@@ -87,14 +77,14 @@ class PostalTests(TestCase):
         self.assertEqual('Crazy address label' in form.as_p(), True)
         self.assertEqual('Company name' in form.as_p(), False)
 
-        # create a blank form with no data
-        form = postal.forms.PostalAddressForm(data={})
+        # create a blank form with firstname and lastname only
+        form = postal.forms.PostalAddressForm(data={'firstname': 'bob', 'lastname': 'ajob', })
 
         # Our form is invalid as line1 is now required
         self.assertEqual(form.is_valid(), False)
 
         self.assertEqual(PostalAddress.objects.count(), 0)
-        form = postal.forms.PostalAddressForm(data={'line1': 'blah'})
+        form = postal.forms.PostalAddressForm(data={'firstname': 'bob', 'lastname': 'ajob', 'line1': 'blah'})
         self.assertEqual(form.is_valid(), True)
         form.save()
         self.assertEqual(PostalAddress.objects.count(), 1)
@@ -103,7 +93,7 @@ class PostalTests(TestCase):
         self.assertEqual(PostalAddress.objects.count(), 0)
         netherlands_form_class = get_postal_form_class("nl")
         self.assertNotEqual(netherlands_form_class, None)
-        test_data = {'line4': '1234AB'}
+        test_data = {'firstname': 'bob', 'lastname': 'ajob', 'line4': '1234AB'}
         form = netherlands_form_class(data=test_data)
         self.assertEqual(form.fields['line1'].label, "Company name")
         self.assertEqual(form.fields['line2'].label, "Street")
