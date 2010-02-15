@@ -68,6 +68,7 @@ e.g.
 INSTALLED_APPS = (
     "countries",
     "postal",
+    ...
     )
 
 2. In your view code import the code for getting a localized postal address

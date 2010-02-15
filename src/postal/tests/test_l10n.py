@@ -22,7 +22,7 @@ class PostalTests(TestCase):
         self.assertNotEqual(german_form_class, None)
         
         # only use required fields
-        test_data = {'firstname': 'bob', 'lastname': 'ajob', 'line4': 'BE', 'line5': '12345',}
+        test_data = {'line4': 'BE', 'line5': '12345',}
         form = german_form_class(data=test_data)
         
         self.assertEqual(form.fields['line1'].label, "Company name")
@@ -42,7 +42,7 @@ class PostalTests(TestCase):
         self.assertNotEqual(irish_form_class, None)
 
         # only use required fields
-        test_data = {'firstname': 'bob', 'lastname': 'ajob', 'line1': 'street', 'line3': 'Tullamore',
+        test_data = {'line1': 'street', 'line3': 'Tullamore',
                      'line4': 'offaly',  }
         form = irish_form_class(data=test_data)
         
@@ -77,14 +77,14 @@ class PostalTests(TestCase):
         self.assertEqual('Crazy address label' in form.as_p(), True)
         self.assertEqual('Company name' in form.as_p(), False)
 
-        # create a blank form with firstname and lastname only
-        form = postal.forms.PostalAddressForm(data={'firstname': 'bob', 'lastname': 'ajob', })
+        # create a blank form
+        form = postal.forms.PostalAddressForm(data={})
 
         # Our form is invalid as line1 is now required
         self.assertEqual(form.is_valid(), False)
 
         self.assertEqual(PostalAddress.objects.count(), 0)
-        form = postal.forms.PostalAddressForm(data={'firstname': 'bob', 'lastname': 'ajob', 'line1': 'blah'})
+        form = postal.forms.PostalAddressForm(data={'line1': 'blah'})
         self.assertEqual(form.is_valid(), True)
         form.save()
         self.assertEqual(PostalAddress.objects.count(), 1)
@@ -93,7 +93,7 @@ class PostalTests(TestCase):
         self.assertEqual(PostalAddress.objects.count(), 0)
         netherlands_form_class = get_postal_form_class("nl")
         self.assertNotEqual(netherlands_form_class, None)
-        test_data = {'firstname': 'bob', 'lastname': 'ajob', 'line4': '1234AB'}
+        test_data = {'line4': '1234AB'}
         form = netherlands_form_class(data=test_data)
         self.assertEqual(form.fields['line1'].label, "Company name")
         self.assertEqual(form.fields['line2'].label, "Street")
