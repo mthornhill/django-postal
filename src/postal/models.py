@@ -20,3 +20,6 @@ class PostalAddress(models.Model):
     def __unicode__(self):
         return "%s, %s, %s, %s, %s, %s" % (self.line1, self.line2, self.line3, self.line4, self.line5, self.country)
 
+    class Meta:
+        verbose_name_plural = "Postal Addresses"
+        unique_together = ("line1", "line2", "line3", "line4", "line5", "country")
