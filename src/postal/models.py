@@ -10,11 +10,11 @@ from django.utils.translation import ugettext_lazy as _
 from countries.models import Country
 
 class PostalAddress(models.Model):
-    line1 = models.CharField(_("Line 1"), max_length=100, blank=True, null=True)
-    line2 = models.CharField(_("Line 2"), max_length=100, blank=True, null=True)
-    line3 = models.CharField(_("Line 3"), max_length=100, blank=True, null=True)
-    line4 = models.CharField(_("Line 4"), max_length=100, blank=True, null=True)
-    line5 = models.CharField(_("Line 5"), max_length=100, blank=True, null=True)
+    line1 = models.CharField(_("Line 1"), max_length=100, default=u'', blank=True, null=True)
+    line2 = models.CharField(_("Line 2"), max_length=100, default=u'', blank=True, null=True)
+    line3 = models.CharField(_("Line 3"), max_length=100, default=u'', blank=True, null=True)
+    line4 = models.CharField(_("Line 4"), max_length=100, default=u'', blank=True, null=True)
+    line5 = models.CharField(_("Line 5"), max_length=100, default=u'', blank=True, null=True)
     country = models.ForeignKey(Country, verbose_name=_("Country"), blank=True, null=True)
 
     def __unicode__(self):
