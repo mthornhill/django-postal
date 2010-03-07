@@ -22,14 +22,14 @@ class PostalTests(TestCase):
         self.assertNotEqual(german_form_class, None)
         
         # only use required fields
-        test_data = {'line4': 'BE', 'line5': '12345',}
+        test_data = {'state': 'BE', 'code': '12345',}
         form = german_form_class(data=test_data)
         
         self.assertEqual(form.fields['line1'].label, "Company name")
         self.assertEqual(form.fields['line2'].label, "Street")
-        self.assertEqual(form.fields['line3'].label, "City")
-        self.assertEqual(form.fields['line4'].label, "State")
-        self.assertEqual(form.fields['line5'].label, "Zip Code")
+        self.assertEqual(form.fields['city'].label, "City")
+        self.assertEqual(form.fields['state'].label, "State")
+        self.assertEqual(form.fields['code'].label, "Zip Code")
         form.save()
         self.assertEqual(PostalAddress.objects.count(), 1)
     
@@ -42,14 +42,14 @@ class PostalTests(TestCase):
         self.assertNotEqual(irish_form_class, None)
 
         # only use required fields
-        test_data = {'line1': 'street', 'line3': 'Tullamore',
-                     'line4': 'offaly',  }
+        test_data = {'line1': 'street', 'city': 'Tullamore',
+                     'state': 'offaly',  }
         form = irish_form_class(data=test_data)
         
         self.assertEqual(form.fields['line1'].label, "Street")
         self.assertEqual(form.fields['line2'].label, "Area")
-        self.assertEqual(form.fields['line3'].label, "Town/City")
-        self.assertEqual(form.fields['line4'].label, "County")
+        self.assertEqual(form.fields['city'].label, "Town/City")
+        self.assertEqual(form.fields['state'].label, "County")
         form.save()
         self.assertEqual(PostalAddress.objects.count(), 1)
     
@@ -64,9 +64,9 @@ class PostalTests(TestCase):
         
         self.assertEqual(form.fields['line1'].label, "Company name")
         self.assertEqual(form.fields['line2'].label, "Street")
-        self.assertEqual(form.fields['line3'].label, "City")
-        self.assertEqual(form.fields['line4'].label, "State")
-        self.assertEqual(form.fields['line5'].label, "Zip code")
+        self.assertEqual(form.fields['city'].label, "City")
+        self.assertEqual(form.fields['state'].label, "State")
+        self.assertEqual(form.fields['code'].label, "Zip code")
 
     def test_set_default_address(self):
         # change line1 label and make it required
@@ -93,13 +93,13 @@ class PostalTests(TestCase):
         self.assertEqual(PostalAddress.objects.count(), 0)
         netherlands_form_class = get_postal_form_class("nl")
         self.assertNotEqual(netherlands_form_class, None)
-        test_data = {'line4': '1234AB'}
+        test_data = {'code': '1234AB'}
         form = netherlands_form_class(data=test_data)
         self.assertEqual(form.fields['line1'].label, "Company name")
         self.assertEqual(form.fields['line2'].label, "Street")
-        self.assertEqual(form.fields['line3'].label, "Town/City")
-        self.assertEqual(form.fields['line4'].label, "Zip Code")
-        self.assertEqual(form.fields.get('line5'), None)
+        self.assertEqual(form.fields['city'].label, "Town/City")
+        self.assertEqual(form.fields.get('state'), None)
+        self.assertEqual(form.fields['code'].label, "Zip Code")
         form.save()
         self.assertEqual(PostalAddress.objects.count(), 1)
 

@@ -9,9 +9,9 @@ from postal.forms import PostalAddressForm
 class GBPostalAddressForm(PostalAddressForm):
     line1 = forms.CharField(label=_(u"Company name"), required=False, max_length=100)
     line2 = forms.CharField(label=_(u"Street"), max_length=100)
-    line3 = forms.CharField(label=_(u"Town"), max_length=100)
-    line4 = forms.CharField(label=_(u"County"), widget=UKCountySelect, max_length=100)
-    line5 = UKPostcodeField(label=_(u"Postcode"))
+    city = forms.CharField(label=_(u"Town"), max_length=100)
+    state = forms.CharField(label=_(u"County"), widget=UKCountySelect, max_length=100)
+    code = UKPostcodeField(label=_(u"Postcode"))
 
     def __init__(self, *args, **kwargs):
         super(GBPostalAddressForm, self).__init__(*args, **kwargs)

@@ -7,9 +7,9 @@ from postal.forms import PostalAddressForm
 class DEPostalAddressForm(PostalAddressForm):    
     line1 = forms.CharField(label=_(u"Company name"), required=False, max_length=100)
     line2 = forms.CharField(label=_(u"Street"), required=False, max_length=100)
-    line3 = forms.CharField(label=_(u"City"), required=False, max_length=100)
-    line4 = forms.CharField(label=_(u"State"), widget=DEStateSelect)
-    line5 = DEZipCodeField(label=_(u"Zip Code"))
+    city = forms.CharField(label=_(u"City"), required=False, max_length=100)
+    state = forms.CharField(label=_(u"State"), widget=DEStateSelect)
+    code = DEZipCodeField(label=_(u"Zip Code"))
 
     def __init__(self, *args, **kwargs):
         super(DEPostalAddressForm, self).__init__(*args, **kwargs)
