@@ -23,10 +23,9 @@ from postal.forms import PostalAddressForm
 class GBPostalAddressForm(PostalAddressForm):
     line1 = forms.CharField(label=_(u"Company name"), required=False, max_length=50)
     line2 = forms.CharField(label=_(u"Street"), max_length=50)
-    line3 = forms.CharField(label=_(u"Town"), max_length=50)
-    line4 = UKPostcodeField(label=_(u"Postcode"))
-    line5 = forms.CharField(label=_(u"County"), widget=UKCountySelect, max_length=50)
-
+    city = forms.CharField(label=_(u"Town"), max_length=50)
+    state = forms.CharField(label=_(u"County"), widget=UKCountySelect, max_length=50)
+    code = UKPostcodeField(label=_(u"Postcode"))
 
 It is hoped that various contributors will contribute address formats per country
 and that eventually this address information could find it's way back in to
