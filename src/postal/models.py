@@ -33,4 +33,3 @@ class PostalAddress(models.Model):
 
     class Meta:
         verbose_name_plural = "Postal Addresses"
-        unique_together = ("line1", "line2", "city", "state", "code", "country")
