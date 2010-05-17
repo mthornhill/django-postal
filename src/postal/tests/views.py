@@ -1,8 +1,7 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from postal.library import country_map
-from postal.views import get_postal_form_class
+from postal.library import country_map, get_postal_form_class
 
 def test_postal(request, country_code="ie"):
     country_code = request.GET.get('country_code', country_code)
