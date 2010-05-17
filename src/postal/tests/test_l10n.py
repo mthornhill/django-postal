@@ -22,13 +22,12 @@ class PostalTests(TestCase):
         self.assertNotEqual(german_form_class, None)
         
         # only use required fields
-        test_data = {'state': 'BE', 'code': '12345',}
+        test_data = {'code': '12345',}
         form = german_form_class(data=test_data)
         
         self.assertEqual(form.fields['line1'].label, "Company name")
         self.assertEqual(form.fields['line2'].label, "Street")
         self.assertEqual(form.fields['city'].label, "City")
-        self.assertEqual(form.fields['state'].label, "State")
         self.assertEqual(form.fields['code'].label, "Zip Code")
         form.save()
         self.assertEqual(PostalAddress.objects.count(), 1)
