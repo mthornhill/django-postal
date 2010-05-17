@@ -103,7 +103,30 @@ class PostalTests(TestCase):
         self.assertEqual(PostalAddress.objects.count(), 1)
 
         
+    def test_no_localisation(self):
+        self.assertEqual(PostalAddress.objects.count(), 0)
+        postal.settings.POSTAL_ADDRESS_L10N = False
+        postal.settings.POSTAL_ADDRESS_LINE1 = ('a', False)
+        postal.settings.POSTAL_ADDRESS_LINE2 = ('b', False)
+        postal.settings.POSTAL_ADDRESS_CITY = ('c', False)
+        postal.settings.POSTAL_ADDRESS_STATE = ('d', False)
+        postal.settings.POSTAL_ADDRESS_CODE = ('e', False)
+        reload(postal.forms)
+        reload(postal.library)
+
+        noloc_form_class = get_postal_form_class("nl")
+        self.assertNotEqual(noloc_form_class, None)
+        test_data = {'code': '1234AB'}
+        form = noloc_form_class(data=test_data)
         
+        self.assertEqual(form.fields['line1'].label, "a")
+        self.assertEqual(form.fields['line2'].label, "b")
+        self.assertEqual(form.fields['city'].label, "c")
+        self.assertEqual(form.fields['state'].label, 'd')
+        self.assertEqual(form.fields['code'].label, "e")
+        form.save()
+        self.assertEqual(PostalAddress.objects.count(), 1)
+
         
         
         
