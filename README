@@ -118,3 +118,9 @@ TODO
 	
 2. Templatetag for modifying a form in a template
 	e.g. {{postal_form|localize:country_code}}
+
+BUILD HISTORY
+=============
+
+0.4
+Don't enforce uniqueness on postal addresses
