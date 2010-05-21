@@ -73,7 +73,7 @@ INSTALLED_APPS = (
 2. In your view code import the code for getting a localized postal address
 
 views.py
-from postal.views import get_postal_form_class
+from postal.library import get_postal_form_class
 
 form_class = get_postal_form_class("us")
 postal_form = form_class()
