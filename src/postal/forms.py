@@ -14,5 +14,3 @@ class PostalAddressForm(forms.ModelForm):
     class Meta:
         model = PostalAddress
         
-    def __unicode__(self):
-        return self.line1 + ', ' + self.line2 + ', ' + self.city + ', ' + self.state + ', ' + self.code + ', ' + self.country
