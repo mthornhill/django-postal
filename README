@@ -35,7 +35,7 @@ django.contrib.localflavor
 Dependencies
 ============
 
-django-countries (http://code.google.com/p/django-countries/)
+django-countries (http://pypi.python.org/pypi/django-countries)
 
 
 Developers, How to Contribute

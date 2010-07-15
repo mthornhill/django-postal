@@ -3,7 +3,6 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.localflavor.uk.forms import UKPostcodeField, UKCountySelect
 
-from countries.models import Country
 from postal.forms import PostalAddressForm
 
 class GBPostalAddressForm(PostalAddressForm):
