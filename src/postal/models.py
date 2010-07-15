@@ -32,4 +32,5 @@ class PostalAddress(models.Model):
         return "%s, %s, %s, %s, %s, %s" % (self.line1, self.line2, self.city, self.state, self.code, self.country)
 
     class Meta:
-        verbose_name_plural = "Postal Addresses"
+        verbose_name = _("Postal Address")
+        verbose_name_plural = _("Postal Addresses")
