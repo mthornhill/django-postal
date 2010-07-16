@@ -26,7 +26,7 @@ class PostalAddress(models.Model):
     code = models.CharField(_("Zip Code/PostCode"), max_length=100, default=u'', blank=True, null=True)
 
     # country
-    country = CountryField(_("Country"), blank=True, null=True)
+    country = CountryField(_("Country"), default=u'', blank=True, null=True)
 
     def __unicode__(self):
         return "%s, %s, %s, %s, %s, %s" % (self.line1, self.line2, self.city, self.state, self.code, self.country)
