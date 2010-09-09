@@ -38,26 +38,6 @@ Dependencies
 django-countries (http://pypi.python.org/pypi/django-countries)
 libsqlite3-dev  (sudo apt-get install libsqlite3-dev)
 
-Developers, How to Contribute
-==========
-$ git clone git@github.com:mthornhill/django-postal.git
-$ cd django-postal
-$ virtualenv . --no-site-packages
-$ source bin/activate
-$ python bootstrap.py
-$ bin/buildout -v
-$ bin/django syncdb
-$ bin/test
-$ bin/django runserver
-
-browse to http://localhost:8000
-
-new countries can be added to the src/postal folder by their 
-2 letter country code e.g. us
-
-Each country folder contains an __init__.py and a forms.py
-forms.py contains the localized address
-
 Usage
 =====
 
@@ -140,3 +120,23 @@ BUILD HISTORY
 
 0.4
 Don't enforce uniqueness on postal addresses
+
+Developers, How to Contribute
+=============================
+$ git clone git@github.com:mthornhill/django-postal.git
+$ cd django-postal
+$ virtualenv . --no-site-packages
+$ source bin/activate
+$ python bootstrap.py
+$ bin/buildout -v
+$ bin/django syncdb
+$ bin/test
+$ bin/django runserver
+
+browse to http://localhost:8000
+
+new countries can be added to the src/postal folder by their 
+2 letter country code e.g. us
+
+Each country folder contains an __init__.py and a forms.py
+forms.py contains the localized address
