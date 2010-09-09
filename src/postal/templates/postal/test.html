@@ -1,20 +1,44 @@
+{% load postal_tags %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Postal Test</title>
+<script src="{{ MEDIA_URL }}jquery/jquery.pack.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{ MEDIA_URL }}jquery/jquery.livequery.pack.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{ MEDIA_URL }}jquery/jquery.form.pack.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/postal.css" />
 </head>
 <body>
 
+<h1>Postal address demo</h1>
+<p>Change country to any country codes below of to see the form localisation change</p>
 <ul>
 {% for c in countries %}
-<li><a href="/?country_code={{c}}">{{c}}</a></li>
+{{c}}
 {% endfor %}
-
 </ul>
 
+
+
+<form class="postal-address"
+              method="post"
+              postal_address="{% url postal_changed_country %}">
+
+
 <table>
-{{form.as_table}}
+{{ form.as_table }}
 </table>
+{% show_postal_address request "blah" "IE" %}
+
+<input type="submit"/>
+</form>
+
+{% if result %}
+<h2>From Submission Results</h2>
+{{result|safe}}
+{% endif %}
+
+
 </body>
 </html>

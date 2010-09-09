@@ -20,7 +20,8 @@ country_map = {"de": DEPostalAddressForm,
               }
 
 def get_postal_form_class(country_code):
-    if postal_settings.POSTAL_ADDRESS_L10N:
-        return country_map.get(country_code.lower(), PostalAddressForm)
-    else:
-        return PostalAddressForm
+    if country_code is not None:    
+        if postal_settings.POSTAL_ADDRESS_L10N:
+            return country_map.get(country_code.lower(), PostalAddressForm)
+    
+    return PostalAddressForm

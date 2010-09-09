@@ -1,0 +1,33 @@
+
+<div id="address-inline">
+<table>
+{{address_form.as_table}}
+</table>
+<input type="hidden" name="prefix" value="{{prefix}}"/>
+</div>
+
+<script>
+var update_address = function() {
+    var data = $(".postal-address").ajaxSubmit({
+        url : $(".postal-address").attr("postal_address"),
+        "success" : function(data) {
+    	    var data = JSON.parse(data);
+            $("#address-inline").html(data["postal_address"]);
+        },
+        "error" : function(data) {
+            alert("an error occurred " + data);
+        }
+    });
+}
+
+{% if prefix %}
+$("#id_{{prefix}}-country").livequery("change", function() {
+	update_address();
+});
+{% else %}
+$("#id_country").livequery("change", function() {
+	update_address();
+});
+{% endif %}
+
+</script>
