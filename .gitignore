@@ -14,3 +14,4 @@ src/*.egg-info
 .pydevproject
 .settings
 pysqlite2-doc
+distribute*
