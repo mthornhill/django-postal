@@ -99,7 +99,7 @@ from postal.forms import PostalAddressForm
 def my_view(request)
 	if request.method == "POST":
         address_form = PostalAddressForm(request.POST, prefix=request.POST.get('prefix', ''))
-		address_form.save()
+        address_form.save()
 
 
 How to use localized addresses
