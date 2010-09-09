@@ -7,7 +7,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 # other imports
-from countries.models import Country
+from django_countries import CountryField
 
 class PostalAddress(models.Model):
     # corresponds to a street address or house name
@@ -26,10 +26,11 @@ class PostalAddress(models.Model):
     code = models.CharField(_("Zip Code/PostCode"), max_length=100, default=u'', blank=True, null=True)
 
     # country
-    country = models.ForeignKey(Country, verbose_name=_("Country"), blank=True, null=True)
+    country = CountryField(_("Country"), default=u'', blank=True, null=True)
 
     def __unicode__(self):
         return "%s, %s, %s, %s, %s, %s" % (self.line1, self.line2, self.city, self.state, self.code, self.country)
 
     class Meta:
-        verbose_name_plural = "Postal Addresses"
+        verbose_name = _("Postal Address")
+        verbose_name_plural = _("Postal Addresses")
