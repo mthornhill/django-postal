@@ -4,15 +4,10 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 from postal.library import country_map
-from postal.views import address_inline
 from postal.forms import PostalAddressForm
-
-
 
 class MyForm(forms.Form):
     name = forms.CharField(max_length=100)
-
-
 
 def test_postal(request):
     countries = []
@@ -30,13 +25,8 @@ def test_postal(request):
             if address_form.is_valid():
                 for k,v in address_form.cleaned_data.items():
                     result = result + k + " -> " + v + "<br/>"
-                
-        
-        
     else:
         form = MyForm() # An unbound form
-
-    
         
     context = RequestContext(request, locals())    
     return render_to_response('postal/test.html', context)

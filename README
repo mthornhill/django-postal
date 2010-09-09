@@ -70,20 +70,36 @@ INSTALLED_APPS = (
     ...
     )
 
-2. In your view code import the code for getting a localized postal address
-
-views.py
-from postal.library import get_postal_form_class
-
-form_class = get_postal_form_class("us")
-postal_form = form_class()
-
-3. Add postal_form to your templates
+3. Add a postal_form to your templates
 
 some_template.html
-{{postal_form}}
+{% load postal_tags %}
+<html>
+<head>
+<script src="{{ MEDIA_URL }}jquery/jquery.pack.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{ MEDIA_URL }}jquery/jquery.livequery.pack.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{ MEDIA_URL }}jquery/jquery.form.pack.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<form class="postal-address"
+              method="post"
+              postal_address="{% url postal_changed_country %}">
+{% show_postal_address request "a-namespace-prefix-for-form" "US" %}
+<input type="submit"/>
+</form>
+</body>
+</html>
 
-4. In this case we will have a US postal form
+In the case above we will see a US Form, changing the country should localise the address form.
+
+3. In your view code add code to save the addressform e.g.
+
+from postal.forms import PostalAddressForm
+
+def my_view(request)
+	if request.method == "POST":
+        address_form = PostalAddressForm(request.POST, prefix=request.POST.get('prefix', ''))
+		address_form.save()
 
 
 How to use localized addresses
