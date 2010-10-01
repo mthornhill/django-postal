@@ -1,5 +1,9 @@
 django-postal
-============
+=============
+
+(Based upon http://github.com/mthornhill/django-postal)
+
+WARNING: These docs are outdated!
 
 A django application that provides a location agnostic model for postal addresses.
 
@@ -36,7 +40,6 @@ Dependencies
 ============
 
 django-countries (http://pypi.python.org/pypi/django-countries)
-libsqlite3-dev  (sudo apt-get install libsqlite3-dev)
 
 Usage
 =====
