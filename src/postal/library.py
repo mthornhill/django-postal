@@ -1,27 +1,24 @@
-# django imports
-from django.shortcuts import render_to_response
-from django.template import RequestContext
-
+from django import forms
+from postal import settings as postal_settings
 from postal.forms import PostalAddressForm
+from postal.forms.de.forms import DEPostalAddressForm
+from postal.forms.gb.forms import GBPostalAddressForm
+from postal.forms.ie.forms import IEPostalAddressForm
+from postal.forms.nl.forms import NLPostalAddressForm
+from postal.forms.us.forms import USPostalAddressForm
 
-from de.forms import DEPostalAddressForm
-from gb.forms import GBPostalAddressForm
-from ie.forms import IEPostalAddressForm
-from nl.forms import NLPostalAddressForm
-from us.forms import USPostalAddressForm
-import settings as postal_settings
+# TODO: Auto-import these forms
+country_map = {
+    "de": DEPostalAddressForm,
+    "gb": GBPostalAddressForm,
+    "ie": IEPostalAddressForm,
+    "nl": NLPostalAddressForm,
+    "us": USPostalAddressForm,
+}
 
-
-country_map = {"de": DEPostalAddressForm,
-               "gb": GBPostalAddressForm,
-               "ie": IEPostalAddressForm,
-               "nl": NLPostalAddressForm,
-               "us": USPostalAddressForm,
-              }
-
-def get_postal_form_class(country_code):
+def form_factory(country_code=None):
     if country_code is not None:    
         if postal_settings.POSTAL_ADDRESS_L10N:
             return country_map.get(country_code.lower(), PostalAddressForm)
-    
+
     return PostalAddressForm

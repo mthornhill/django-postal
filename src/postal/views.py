@@ -3,9 +3,9 @@ from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.utils import simplejson
 
-from postal.library import get_postal_form_class
+from postal.library import form_factory
 
-def address_inline(request, prefix="", country_code=None, template_name="postal/address_inline.html"):
+def address_inline(request, prefix="", country_code=None, template_name="postal/form.html"):
     """displays postal address with localized fields
     """
     country_prefix = "country"
@@ -13,23 +13,23 @@ def address_inline(request, prefix="", country_code=None, template_name="postal/
     if prefix:
         country_prefix = prefix + '-country'
     country_code = request.POST.get(country_prefix, country_code)
-    address_form_class = get_postal_form_class(country_code)
+    form_class = form_factory(country_code=country_code)
     
-    if request.method == "POST":    
-        address_form = address_form_class(prefix=prefix, data={country_prefix: country_code},)
+    if request.method == "POST":
+        data = request.POST.copy()
+        data.update({country_prefix: country_code})
+        form = form_class(prefix=prefix, data=data)
     else:
-        address_form = address_form_class(prefix=prefix)
+        form = form_class(prefix=prefix)
         
-    html = render_to_string(template_name, RequestContext(request, {
-        "address_form": address_form,
+    return render_to_string(template_name, RequestContext(request, {
+        "form": form,
         "prefix": prefix,
     }))
-    
-    return html 
 
 
 def changed_country(request):
     result = simplejson.dumps({
-        "postal_address" : address_inline(request),
+        "postal_address": address_inline(request),
     })
     return HttpResponse(result)
