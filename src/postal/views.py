@@ -6,19 +6,25 @@ from django.utils import simplejson
 from postal.library import form_factory
 
 def address_inline(request, prefix="", country_code=None, template_name="postal/form.html"):
-    """displays postal address with localized fields
-    """
+    """ Displays postal address with localized fields """
+    
     country_prefix = "country"
     prefix = request.POST.get('prefix', prefix)
+    
     if prefix:
         country_prefix = prefix + '-country'
+    
     country_code = request.POST.get(country_prefix, country_code)
     form_class = form_factory(country_code=country_code)
     
     if request.method == "POST":
-        data = request.POST.copy()
+        data = {}
+        for (key, val) in request.POST.items():
+            if val is not None and len(val) > 0:
+                data[key] = val
         data.update({country_prefix: country_code})
-        form = form_class(prefix=prefix, data=data)
+        
+        form = form_class(prefix=prefix, initial=data)
     else:
         form = form_class(prefix=prefix)
         
