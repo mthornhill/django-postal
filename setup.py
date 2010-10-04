@@ -6,7 +6,7 @@ def read(fname):
 
 setup(
     name = "django-postal",
-    version = "0.7",
+    version = "0.7.1",
     url = 'http://github.com/devioustree/django-postal',
     license = 'BSD',
     description = "A Django app for l10n of postal addresses.",
