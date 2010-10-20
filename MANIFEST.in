@@ -1,0 +1,3 @@
+include setup.py README MANIFEST.in
+recursive-include src *.html
+global-exclude *~
