@@ -17,6 +17,7 @@ setup(
 
     packages = find_packages('src'),
     package_dir = {'': 'src'},
+    package_data={'':['*.txt', '*.js', '*.html', '*.*']},
 
     install_requires = ['setuptools'],
 
