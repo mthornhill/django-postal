@@ -3,7 +3,7 @@ django-postal
 
 (Based upon http://github.com/mthornhill/django-postal)
 
-WARNING: These docs are outdated!
+WARNING: This project is in ALPHA mode and the API is in flux.
 
 A django application that provides a location agnostic model for postal addresses.
 
