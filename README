@@ -1,5 +1,9 @@
 django-postal
-============
+=============
+
+(Based upon http://github.com/mthornhill/django-postal)
+
+WARNING: These docs are outdated!
 
 A django application that provides a location agnostic model for postal addresses.
 
@@ -36,7 +40,6 @@ Dependencies
 ============
 
 django-countries (http://pypi.python.org/pypi/django-countries)
-libsqlite3-dev  (sudo apt-get install libsqlite3-dev)
 
 Usage
 =====
@@ -56,15 +59,15 @@ some_template.html
 {% load postal_tags %}
 <html>
 <head>
-<script src="{{ MEDIA_URL }}jquery/jquery.pack.js" type="text/javascript" charset="utf-8"></script>
-<script src="{{ MEDIA_URL }}jquery/jquery.livequery.pack.js" type="text/javascript" charset="utf-8"></script>
-<script src="{{ MEDIA_URL }}jquery/jquery.form.pack.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{ MEDIA_URL }}js/jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
-<form class="postal-address"
-              method="post"
-              postal_address="{% url postal_changed_country %}">
-{% show_postal_address request "a-namespace-prefix-for-form" "US" %}
+<form method="POST" action="">
+    
+{% monitor_country_change %}
+<script type="text/javascript">
+    $('form').monitor_country_change('#id_country');
+</script>
 <input type="submit"/>
 </form>
 </body>
@@ -82,7 +85,7 @@ def my_view(request)
         address_form.save()
 
 
-How to use localized addresses
+How to use localised addresses
 ==============================
 
 Address localisation is turned on by default.
@@ -104,39 +107,3 @@ each of these variables is set to a tuple of the format ('label', True/False)
 the field is required or not, e.g.
 ::
 	POSTAL_ADDRESS_LINE1 = ("Department", True)
-
-TODO
-====
-
-1. Create method of allowning third party app to register a localized postal form
-	a) Registry match with regular expressions cf urls.py
-	b) admin site approach
-	
-2. Templatetag for modifying a form in a template
-	e.g. {{postal_form|localize:country_code}}
-
-BUILD HISTORY
-=============
-
-0.4
-Don't enforce uniqueness on postal addresses
-
-Developers, How to Contribute
-=============================
-$ git clone git@github.com:mthornhill/django-postal.git
-$ cd django-postal
-$ virtualenv . --no-site-packages
-$ source bin/activate
-$ python bootstrap.py
-$ bin/buildout -v
-$ bin/django syncdb
-$ bin/test
-$ bin/django runserver
-
-browse to http://localhost:8000
-
-new countries can be added to the src/postal folder by their 
-2 letter country code e.g. us
-
-Each country folder contains an __init__.py and a forms.py
-forms.py contains the localized address

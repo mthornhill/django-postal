@@ -1,0 +1,26 @@
+<script type="text/javascript">
+;(function($){
+    var change_form = function(form, holder) {
+        $.ajax({
+            type: 'POST',
+            url: "{{ postal_url }}",
+            data: $(form).serialize(),
+            success: function(response) {
+                var data = JSON.parse(response);
+                holder.html(data['postal_address']);
+            },
+            error: function(response) {
+                alert(response);
+            }
+        });
+    }
+    
+    $.fn.monitor_country_change = function(country_selector){
+        var holder = this;
+        $(country_selector).live('change', function() {
+            var form = $(this).closest('form');
+            change_form(form, holder);
+        });
+    }
+})(jQuery);
+</script>

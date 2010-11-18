@@ -6,17 +6,18 @@ def read(fname):
 
 setup(
     name = "django-postal",
-    version = "0.6.2",
+    version = "0.7.2",
     url = 'http://github.com/mthornhill/django-postal',
     license = 'BSD',
     description = "A Django app for l10n of postal addresses.",
     long_description = read('README'),
 
-    author = 'Michael Thornhill',
-    author_email = 'michael@maithu.com',
+    author = 'Tom Drummond',
+    author_email = 'tom@devioustree.co.uk',
 
     packages = find_packages('src'),
     package_dir = {'': 'src'},
+    package_data={'':['*.txt', '*.js', '*.html', '*.*']},
 
     install_requires = ['setuptools'],
 

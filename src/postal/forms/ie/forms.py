@@ -57,7 +57,7 @@ class IEPostalAddressForm(PostalAddressForm):
     city = forms.CharField(label=_(u"Town/City"), max_length=100)
     state = forms.CharField(label=_(u"County"), widget=IECountySelect(), max_length=100)
 
-    class Meta(PostalAddressForm.Meta):
+    class Meta:
         exclude = ('code',)
 
     def __init__(self, *args, **kwargs):

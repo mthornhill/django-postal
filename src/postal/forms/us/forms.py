@@ -6,8 +6,8 @@ from django.contrib.localflavor.us.forms import USStateField, USStateSelect, USZ
 from postal.forms import PostalAddressForm
 
 class USPostalAddressForm(PostalAddressForm):
-    line1 = forms.CharField(label=_(u"Company name"), required=False, max_length=50)
-    line2 = forms.CharField(label=_(u"Street"), max_length=100)
+    line1 = forms.CharField(label=_(u"Street"), max_length=50)
+    line2 = forms.CharField(label=_(u"Street"), required=False, max_length=100)
     city = forms.CharField(label=_(u"City"), max_length=50)
     state = USStateField(label=_(u"US State"), widget=USStateSelect)
     code = USZipCodeField(label=_(u"Zip Code"))
