@@ -7,7 +7,7 @@
             data: $(form).serialize(),
             success: function(response) {
                 var data = JSON.parse(response);
-                holder.html(data['postal_address']);
+                holder.html(data['postal_address'] + '{%csrf_token%}<input type="submit"/>');
             },
             error: function(response) {
                 alert(response);

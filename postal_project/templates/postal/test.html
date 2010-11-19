@@ -4,7 +4,12 @@
 <script src="{{ MEDIA_URL }}js/jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
+{% if result %}
+<p>You Submitted:</p>
+<p>{{result|safe}}</p>
+{% endif %}
 <form method="POST" action="">
+{% csrf_token %}
 {{form.as_p}}
 {% monitor_country_change %}
 <script type="text/javascript">

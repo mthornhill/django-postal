@@ -25,8 +25,8 @@ from django.contrib.localflavor.uk.forms import UKPostcodeField, UKCountySelect
 from postal.forms import PostalAddressForm
 
 class GBPostalAddressForm(PostalAddressForm):
-    line1 = forms.CharField(label=_(u"Company name"), required=False, max_length=50)
-    line2 = forms.CharField(label=_(u"Street"), max_length=50)
+    line1 = forms.CharField(label=_(u"Street"), required=False, max_length=50)
+    line2 = forms.CharField(label=_(u"Area"), max_length=50)
     city = forms.CharField(label=_(u"Town"), max_length=50)
     state = forms.CharField(label=_(u"County"), widget=UKCountySelect, max_length=50)
     code = UKPostcodeField(label=_(u"Postcode"))
@@ -63,7 +63,8 @@ some_template.html
 </head>
 <body>
 <form method="POST" action="">
-    
+{% csrf_token %}
+{{form.as_p}}
 {% monitor_country_change %}
 <script type="text/javascript">
     $('form').monitor_country_change('#id_country');
@@ -72,8 +73,7 @@ some_template.html
 </form>
 </body>
 </html>
-
-In the case above we will see a US Form, changing the country should localise the address form.
+Changing the country in the form above should localise the address form.
 
 3. In your view code add code to save the addressform e.g.
 

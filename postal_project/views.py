@@ -14,15 +14,12 @@ def test_postal(request):
     
     result = ""
     if request.method == "POST":
-        form = MyForm(request.POST)
+        form = PostalAddressForm(request.POST, prefix=request.POST.get('prefix', ''))
         if form.is_valid():
             for k,v in form.cleaned_data.items():
                 result = result + k + " -> " + v + "<br/>"
-                
-            address_form = PostalAddressForm(request.POST, prefix=request.POST.get('prefix', ''))
-            if address_form.is_valid():
-                for k,v in address_form.cleaned_data.items():
-                    result = result + k + " -> " + v + "<br/>"
+        context = RequestContext(request, locals())
+        return render_to_response('postal/test.html', context)
     else:
         form = PostalAddressForm() # An unbound form
         
