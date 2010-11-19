@@ -107,3 +107,33 @@ each of these variables is set to a tuple of the format ('label', True/False)
 the field is required or not, e.g.
 ::
 	POSTAL_ADDRESS_LINE1 = ("Department", True)
+
+BUILD HISTORY
+=============
+
+0.7.2
+Major refactor where all models removed so django-postal just provides localized forms.
+It is up to the supporting project to define their own address models
+
+0.4
+Don't enforce uniqueness on postal addresses
+
+Developers, How to Contribute
+=============================
+$ git clone git@github.com:mthornhill/django-postal.git
+$ cd django-postal
+$ virtualenv . --no-site-packages
+$ source bin/activate
+$ python bootstrap.py
+$ bin/buildout -v
+$ bin/django syncdb
+$ bin/django test postal
+$ bin/django runserver
+
+browse to http://localhost:8000
+
+new countries can be added to the src/postal/forms folder by their
+2 letter country code e.g. us
+
+Each country folder contains an __init__.py and a forms.py
+forms.py contains the localized address
