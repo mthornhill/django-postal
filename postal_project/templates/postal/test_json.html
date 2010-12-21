@@ -1,0 +1,55 @@
+{% load postal_tags %}
+<html>
+<head>
+<script src="{{ MEDIA_URL }}js/jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+{% if result %}
+<p>You Submitted:</p>
+<p>{{result|safe}}</p>
+{% endif %}
+<form method="POST" action="">
+{% csrf_token %}
+{{form.as_p}}
+<script type="text/javascript">
+$.fn.monitor_country_change = function(country_selector){
+        var holder = this;
+        $(country_selector).live('change', function() {
+            var form = $(this).closest('form');
+            change_form(form, holder);
+        });
+}
+
+var change_form = function(form, holder) {
+    $.ajax({
+        type: 'GET',
+        url: "{% url postal-api-country %}",
+        data: $(form).serialize(),
+        success: function(data) {
+            $('#id_line1').parent().html(data['line1']);
+            $('#id_line2').parent().html(data['line2']);
+            $('#id_city').parent().html(data['city']);
+            $('#id_state').parent().html(data['state']);
+            
+            if (data.code) {
+              $('#id_code').parent().html(data['code']);
+              $('#id_code').parent().show();              
+            } else {
+              $('#id_code').parent().hide();
+            }
+        },
+        error: function(response) {
+            alert(response);
+        }
+    });
+}
+
+$(function () {
+  $('form').monitor_country_change('#id_country');    
+});
+
+</script>
+<input type="submit"/>
+</form>
+</body>
+</html>
