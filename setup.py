@@ -19,7 +19,7 @@ setup(
     package_dir = {'': 'src'},
     package_data={'':['*.txt', '*.js', '*.html', '*.*']},
 
-    install_requires = ['setuptools'],
+    install_requires = ['setuptools','django-countries','django-piston'],
 
     classifiers = [
         'Development Status :: 3 - Alpha',
