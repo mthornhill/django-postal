@@ -8,11 +8,10 @@ class PostalHandler(BaseHandler):
         json = {}
         form_class = form_factory(country_code=iso_code)
         form_obj = form_class()
-        
         for k,v in form_obj.fields.items():
-            if k == 'country':
-                json[k] = '<label for="id_%s">%s</label>: '%(k,unicode(v.label)) + v.widget.render(k,iso_code)
-            else:           
-                json[k] = '<label for="id_%s">%s</label>: '%(k,unicode(v.label)) + v.widget.render(k,"")
+            if k not in json.keys():
+                json[k] = {}
+            json[k]['label'] = unicode(v.label)
+            json[k]['widget'] =  v.widget.render(k,"", attrs={'id': 'id_' + k})
         return json
        

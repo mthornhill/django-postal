@@ -24,15 +24,16 @@ var change_form = function(form, holder) {
     $.ajax({
         type: 'GET',
         url: "{% url postal-api-country %}",
+        cache: false,
         data: $(form).serialize(),
         success: function(data) {
-            $('#id_line1').parent().html(data['line1']);
-            $('#id_line2').parent().html(data['line2']);
-            $('#id_city').parent().html(data['city']);
-            $('#id_state').parent().html(data['state']);
+            $('#id_line1').parent().html('<label for="id_line1">' + data.line1.label + ':</label> ' + data.line1.widget);
+            $('#id_line2').parent().html('<label for="id_line2">' + data.line2.label + ':</label> ' + data.line2.widget);
+            $('#id_city').parent().html('<label for="id_city">' + data.city.label + ':</label> ' + data.city.widget);
+            $('#id_state').parent().html('<label for="id_state">' + data.state.label + ':</label> ' + data.state.widget);
             
             if (data.code) {
-              $('#id_code').parent().html(data['code']);
+              $('#id_code').parent().html('<label for="id_code">' + data.code.label + ':</label> ' + data.code.widget);
               $('#id_code').parent().show();              
             } else {
               $('#id_code').parent().hide();
