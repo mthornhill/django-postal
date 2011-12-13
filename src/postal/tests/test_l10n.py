@@ -24,7 +24,7 @@ class PostalTests(TestCase):
         form = german_form_class(data=test_data)
         
         self.assertEqual(form.fields['line1'].label.lower(), "street")
-        self.assertEqual(form.fields['line2'].label.lower(), "area")
+        self.assertEqual(form.fields.has_key('line2'), False)
         self.assertEqual(form.fields['city'].label.lower(), "city")
         self.assertEqual(form.fields['code'].label.lower(), "zip code")
         
