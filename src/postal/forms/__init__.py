@@ -14,8 +14,8 @@ class PostalAddressForm(forms.Form):
     city = forms.CharField(label=POSTAL_ADDRESS_CITY[0], required=POSTAL_ADDRESS_CITY[1], max_length=100)
     state = forms.CharField(label=POSTAL_ADDRESS_STATE[0], required=POSTAL_ADDRESS_STATE[1], max_length=100)
     code = forms.CharField(label=POSTAL_ADDRESS_CODE[0], required=POSTAL_ADDRESS_CODE[1], max_length=100)
-    country = forms.ChoiceField(choices=country_list)
-    
+    country = forms.ChoiceField(label=_(u"Country"), choices=country_list)
+
     def clean_country(self):
         data = self.cleaned_data['country']
         if data not in country_dict.keys():
