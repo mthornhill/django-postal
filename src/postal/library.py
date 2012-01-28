@@ -7,6 +7,7 @@ from postal.forms.ie.forms import IEPostalAddressForm
 from postal.forms.nl.forms import NLPostalAddressForm
 from postal.forms.us.forms import USPostalAddressForm
 from postal.forms.cz.forms import CZPostalAddressForm
+from postal.forms.pl.forms import PLPostalAddressForm
 
 # TODO: Auto-import these forms
 country_map = {
@@ -15,6 +16,7 @@ country_map = {
     "gb": GBPostalAddressForm,
     "ie": IEPostalAddressForm,
     "nl": NLPostalAddressForm,
+    "pl": PLPostalAddressForm,
     "us": USPostalAddressForm,
 }
 
