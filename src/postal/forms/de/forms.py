@@ -14,3 +14,4 @@ class DEPostalAddressForm(PostalAddressForm):
         self.fields.pop('line2')
         self.fields.pop('state')
         self.fields['country'].initial = "DE"
+        self.fields.keyOrder = ['line1', 'code', 'city', 'country']
