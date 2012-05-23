@@ -17,7 +17,7 @@ setup(
 
     packages = find_packages('src'),
     package_dir = {'': 'src'},
-    package_data={'':['*.txt', '*.js', '*.html', '*.*']},
+    package_data={'':['*.txt', '*.js', '*.html', '*.*', 'templates/postal/*.html']},
 
     install_requires = ['setuptools','django-countries','django-piston'],
 
