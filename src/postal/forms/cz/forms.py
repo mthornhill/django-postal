@@ -4,9 +4,10 @@ from django.contrib.localflavor.cz.forms import CZPostalCodeField
 
 from postal.forms import PostalAddressForm
 
-class CZPostalAddressForm(PostalAddressForm):    
-    line1 = forms.CharField(label=_(u"Street"), required=False, max_length=100)
-    city = forms.CharField(label=_(u"City"), required=False, max_length=100)
+
+class CZPostalAddressForm(PostalAddressForm):
+    line1 = forms.CharField(label=_(u"Street"), max_length=100)
+    city = forms.CharField(label=_(u"City"), max_length=100)
     code = CZPostalCodeField(label=_(u"Zip Code"))
 
     def __init__(self, *args, **kwargs):
