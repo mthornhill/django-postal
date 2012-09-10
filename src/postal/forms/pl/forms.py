@@ -5,8 +5,8 @@ from django.contrib.localflavor.pl.forms import PLPostalCodeField
 from postal.forms import PostalAddressForm
 
 class PLPostalAddressForm(PostalAddressForm):    
-    line1 = forms.CharField(label=_(u"Street"), required=False, max_length=100)
-    city = forms.CharField(label=_(u"City"), required=False, max_length=100)
+    line1 = forms.CharField(label=_(u"Street"), required=True, max_length=100)
+    city = forms.CharField(label=_(u"City"), required=True, max_length=100)
     code = PLPostalCodeField(label=_(u"Postal code"))
 
     def __init__(self, *args, **kwargs):
