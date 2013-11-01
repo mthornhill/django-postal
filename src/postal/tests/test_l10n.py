@@ -27,6 +27,31 @@ class PostalTests(TestCase):
         self.assertEqual(form.fields.has_key('line2'), False)
         self.assertEqual(form.fields['city'].label.lower(), "city")
         self.assertEqual(form.fields['code'].label.lower(), "zip code")
+
+    def test_get_mx_address(self):
+        """
+        Tests that we get the correct widget for Mexico
+        """
+        mx_form_class = form_factory("mx")
+        self.assertNotEqual(mx_form_class, None)
+
+        # only use required fields
+        test_data = {
+            'line1': 'Avenida Reforma',
+            'line2': '1110',
+            'line3': 'Centro',
+            'city': 'Puebla',
+            'state': 'Puebla',
+            'code': '12345'
+        }
+        form = mx_form_class(data=test_data)
+
+        self.assertEqual(form.fields['line1'].label.lower(), "street")
+        self.assertEqual(form.fields['line2'].label.lower(), "number")
+        self.assertEqual(form.fields['line3'].label.lower(), "suburb")
+        self.assertEqual(form.fields['city'].label.lower(), "city")
+        self.assertEqual(form.fields['state'].label.lower(), "state")
+        self.assertEqual(form.fields['code'].label.lower(), "zip code")
         
     def test_get_ie_address(self):
         """
