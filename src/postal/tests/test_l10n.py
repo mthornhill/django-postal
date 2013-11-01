@@ -47,8 +47,7 @@ class PostalTests(TestCase):
         form = mx_form_class(data=test_data)
 
         self.assertEqual(form.fields['line1'].label.lower(), "street")
-        self.assertEqual(form.fields['line2'].label.lower(), "number")
-        self.assertEqual(form.fields['line3'].label.lower(), "suburb")
+        self.assertEqual(form.fields['line2'].label.lower(), "area")
         self.assertEqual(form.fields['city'].label.lower(), "city")
         self.assertEqual(form.fields['state'].label.lower(), "state")
         self.assertEqual(form.fields['code'].label.lower(), "zip code")
