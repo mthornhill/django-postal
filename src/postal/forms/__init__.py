@@ -8,7 +8,8 @@ country_list = (('', '-'*45),) + countries.COUNTRIES
 country_dict = {}
 for (key, value) in countries.COUNTRIES: country_dict[key] = value
 
-class PostalAddressForm(forms.Form):
+
+class PostalAddressFormMixin():
     line1 = forms.CharField(label=POSTAL_ADDRESS_LINE1[0], required=POSTAL_ADDRESS_LINE1[1], max_length=100)
     line2 = forms.CharField(label=POSTAL_ADDRESS_LINE2[0], required=POSTAL_ADDRESS_LINE2[1], max_length=100)
     city = forms.CharField(label=POSTAL_ADDRESS_CITY[0], required=POSTAL_ADDRESS_CITY[1], max_length=100)
@@ -21,3 +22,7 @@ class PostalAddressForm(forms.Form):
         if data not in country_dict.keys():
             raise forms.ValidationError("You must select a country")
         return data
+
+
+class PostalAddressForm(forms.Form, PostalAddressFromMixin):
+    pass
