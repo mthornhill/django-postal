@@ -6,6 +6,8 @@ from django.contrib.localflavor.mx.forms import MXStateSelect, MXZipCodeField
 from postal.forms import PostalAddressForm
 
 class MXPostalAddressForm(PostalAddressForm):
+    line1 = forms.CharField(label=_(u"Street"), max_length=100)
+    line2 = forms.CharField(label=_(u"Number"), max_length=100)
     city = forms.CharField(label=_(u"City"), max_length=100)
     state = forms.CharField(label=_(u"State"), widget=MXStateSelect)
     code = MXZipCodeField(label=_(u"Zip Code"))
