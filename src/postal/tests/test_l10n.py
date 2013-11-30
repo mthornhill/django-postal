@@ -12,6 +12,27 @@ class PostalTests(TestCase):
         """Just make sure everything is set up correctly."""
         self.assert_(True)
 
+    def test_get_ar_address(self):
+        """
+        Tests that we get the correct widget for Argentina
+        """
+        form_class = form_factory("ar")
+        self.assertNotEqual(form_class, None)
+
+        # only use required fields
+        test_data = {
+            'line1': 'Maipu',
+            'line2': '270',
+            'city': 'Ciudad de Buenos Aires',
+            'state': 'B',
+            'code': 'C1006ACT',
+        }
+        form = form_class(data=test_data)
+
+        self.assertEqual(form.fields['line1'].label.lower(), "street")
+        self.assertEqual(form.fields['line2'].label.lower(), "number")
+        self.assertEqual(form.fields['city'].label.lower(), "city")
+        self.assertEqual(form.fields['code'].label.lower(), "zip code")
 
     def test_get_de_address(self):
         """
