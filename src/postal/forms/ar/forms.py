@@ -1,7 +1,7 @@
 """ http://www.bitboost.com/ref/international-address-formats.html """
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.localflavor.ar.forms import ARProvinceSelect, ARPostalCodeField
+from localflavor.ar.forms import ARProvinceSelect, ARPostalCodeField
 
 from postal.forms import PostalAddressForm
 

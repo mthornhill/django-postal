@@ -74,7 +74,7 @@ class PostalTests(TestCase):
         self.assertEqual(form.fields['state'].label.lower(), 'state')
         self.assertEqual(form.fields['code'].label.lower(), 'zip code')
 
-        from django.contrib.localflavor.mx.forms import MXStateSelect, MXZipCodeField
+        from localflavor.mx.forms import MXStateSelect, MXZipCodeField
         self.assertIsInstance(form.fields['state'].widget, MXStateSelect)
         self.assertIsInstance(form.fields['code'], MXZipCodeField)
 

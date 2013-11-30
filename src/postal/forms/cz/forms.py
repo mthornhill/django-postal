@@ -1,6 +1,6 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.localflavor.cz.forms import CZPostalCodeField
+from localflavor.cz.forms import CZPostalCodeField
 
 from postal.forms import PostalAddressForm
 

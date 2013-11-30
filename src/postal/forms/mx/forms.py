@@ -1,7 +1,7 @@
 """ http://www.bitboost.com/ref/international-address-formats.html """
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.localflavor.mx.forms import MXStateSelect, MXZipCodeField
+from localflavor.mx.forms import MXStateSelect, MXZipCodeField
 
 from postal.forms import PostalAddressForm
 

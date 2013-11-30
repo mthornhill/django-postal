@@ -29,7 +29,7 @@ class PostalWidgetsTests(TestCase):
         }
         form = form_class(data=test_data)
 
-        from django.contrib.localflavor.ar.forms import ARProvinceSelect, ARPostalCodeField
+        from localflavor.ar.forms import ARProvinceSelect, ARPostalCodeField
         self.assertIsInstance(form.fields['state'].widget, ARProvinceSelect)
         self.assertIsInstance(form.fields['code'], ARPostalCodeField)
         self.assertEqual(form.fields['country'].initial, 'AR')
