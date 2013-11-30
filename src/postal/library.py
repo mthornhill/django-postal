@@ -1,6 +1,7 @@
 from django import forms
 from postal import settings as postal_settings
 from postal.forms import PostalAddressForm
+from postal.forms.ar.forms import ARPostalAddressForm
 from postal.forms.co.forms import COPostalAddressForm
 from postal.forms.cz.forms import CZPostalAddressForm
 from postal.forms.de.forms import DEPostalAddressForm
@@ -24,6 +25,7 @@ country_map = {
     "pl": PLPostalAddressForm,
     "ru": RUPostalAddressForm,
     "us": USPostalAddressForm,
+    "ar": ARPostalAddressForm,
 }
 
 def form_factory(country_code=None):
