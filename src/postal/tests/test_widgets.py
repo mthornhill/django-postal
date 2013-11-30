@@ -1,10 +1,8 @@
 from django.test import TestCase
 from django.utils.translation import ugettext
 from django import forms
-
 from postal.library import form_factory
-import postal.settings
-import postal.forms
+from postal import settings as postal_settings
 
 
 class PostalWidgetsTests(TestCase):
@@ -16,6 +14,9 @@ class PostalWidgetsTests(TestCase):
         """
         Tests that we get the correct widget for Argentina
         """
+        # enable L10N
+        postal_settings.POSTAL_ADDRESS_L10N = True
+
         form_class = form_factory("ar")
         self.assertNotEqual(form_class, None)
 

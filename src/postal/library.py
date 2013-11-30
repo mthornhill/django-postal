@@ -28,6 +28,7 @@ country_map = {
     "ar": ARPostalAddressForm,
 }
 
+
 def form_factory(country_code=None):
     if country_code is not None:
         if postal_settings.POSTAL_ADDRESS_L10N:

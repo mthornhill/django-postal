@@ -35,3 +35,5 @@ INSTALLED_APPS = ['django.contrib.admin',
 ROOT_URLCONF = 'postal_project.urls'
 
 SECRET_KEY = "abc123"
+
+POSTAL_ADDRESS_L10N = True
