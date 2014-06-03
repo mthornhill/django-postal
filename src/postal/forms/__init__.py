@@ -1,12 +1,12 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from django_countries import countries
+from django_countries import data as country_data
 
-from postal.settings import POSTAL_ADDRESS_LINE1, POSTAL_ADDRESS_LINE2, POSTAL_ADDRESS_CITY, POSTAL_ADDRESS_STATE, POSTAL_ADDRESS_CODE
+from postal.settings import POSTAL_ADDRESS_LINE1, POSTAL_ADDRESS_LINE2, POSTAL_ADDRESS_CITY, POSTAL_ADDRESS_STATE, \
+    POSTAL_ADDRESS_CODE
 
-country_list = (('', '-'*45),) + countries.COUNTRIES
-country_dict = {}
-for (key, value) in countries.COUNTRIES: country_dict[key] = value
+country_list = [('', '-'*45)] + country_data.COUNTRIES.items()
+
 
 class PostalAddressForm(forms.Form):
     line1 = forms.CharField(label=POSTAL_ADDRESS_LINE1[0], required=POSTAL_ADDRESS_LINE1[1], max_length=100)
@@ -18,6 +18,6 @@ class PostalAddressForm(forms.Form):
 
     def clean_country(self):
         data = self.cleaned_data['country']
-        if data not in country_dict.keys():
+        if data not in country_data.COUNTRIES.keys():
             raise forms.ValidationError("You must select a country")
         return data
