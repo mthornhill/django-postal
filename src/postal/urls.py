@@ -1,5 +1,4 @@
-from django.conf.urls.defaults import *
-from django.conf import settings
+from django.conf.urls import *
 
 urlpatterns = patterns("",
             (r'^api/', include('postal.api.urls')),
