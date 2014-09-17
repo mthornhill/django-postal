@@ -1,7 +1,10 @@
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.template.loader import render_to_string
-from django.utils import simplejson
+try:
+	import json
+except ImportError:
+	from django.utils import simplejson as json
 
 from postal.library import form_factory
 
@@ -35,7 +38,7 @@ def address_inline(request, prefix="", country_code=None, template_name="postal/
 
 
 def changed_country(request):
-    result = simplejson.dumps({
+    result = json.dumps({
         "postal_address": address_inline(request),
     })
     return HttpResponse(result)
