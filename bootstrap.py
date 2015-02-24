@@ -86,7 +86,7 @@ else:
         return c
 
 cmd = 'from setuptools.command.easy_install import main; main()'
-ws  = pkg_resources.working_set
+ws = pkg_resources.working_set
 
 if USE_DISTRIBUTE:
     requirement = 'distribute'
