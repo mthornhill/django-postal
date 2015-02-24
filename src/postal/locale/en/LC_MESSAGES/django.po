@@ -1,0 +1,91 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-24 03:20-0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: settings.py:7 forms/ar/forms.py:9 forms/co/forms.py:9 forms/cz/forms.py:9
+#: forms/de/forms.py:8 forms/gb/forms.py:9 forms/ie/forms.py:9
+#: forms/it/forms.py:9 forms/mx/forms.py:9 forms/nl/forms.py:8
+#: forms/pl/forms.py:8 forms/ru/forms.py:8 forms/us/forms.py:9
+msgid "Street"
+msgstr "Street"
+
+#: settings.py:8 forms/gb/forms.py:10 forms/ie/forms.py:10
+#: forms/it/forms.py:10 forms/nl/forms.py:9 forms/ru/forms.py:9
+#: forms/us/forms.py:10
+msgid "Area"
+msgstr "Area"
+
+#: settings.py:9 forms/ar/forms.py:11 forms/cz/forms.py:10 forms/de/forms.py:9
+#: forms/it/forms.py:11 forms/mx/forms.py:11 forms/pl/forms.py:9
+#: forms/ru/forms.py:10 forms/us/forms.py:11
+msgid "City"
+msgstr "City"
+
+#: settings.py:10 forms/mx/forms.py:12
+msgid "State"
+msgstr "State"
+
+#: settings.py:11 forms/pl/forms.py:10
+msgid "Zip code"
+msgstr "Zip code"
+
+#: forms/__init__.py:17
+msgid "Country"
+msgstr "Country"
+
+#: forms/ar/forms.py:10 forms/co/forms.py:10 forms/mx/forms.py:10
+msgid "Number"
+msgstr "Number"
+
+#: forms/ar/forms.py:12 forms/it/forms.py:12
+msgid "Province"
+msgstr "Province"
+
+#: forms/ar/forms.py:13 forms/cz/forms.py:11 forms/de/forms.py:10
+#: forms/it/forms.py:13 forms/mx/forms.py:13 forms/nl/forms.py:11
+#: forms/us/forms.py:13
+msgid "Zip Code"
+msgstr "Zip Code"
+
+#: forms/co/forms.py:11
+msgid "Department"
+msgstr "Department"
+
+#: forms/gb/forms.py:11
+msgid "Town"
+msgstr "Town"
+
+#: forms/gb/forms.py:12 forms/ie/forms.py:12 forms/ru/forms.py:11
+msgid "County"
+msgstr "County"
+
+#: forms/gb/forms.py:13
+msgid "Postcode"
+msgstr "Postcode"
+
+#: forms/ie/forms.py:11 forms/nl/forms.py:10
+msgid "Town/City"
+msgstr "Town/City"
+
+#: forms/ru/forms.py:12
+msgid "Postal code"
+msgstr "Postal code"
+
+#: forms/us/forms.py:12
+msgid "US State"
+msgstr "US State"
