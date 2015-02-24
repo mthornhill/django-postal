@@ -36,7 +36,7 @@ class PostalTests(TestCase):
 
     def test_get_de_address(self):
         """
-        Tests that we get the correct widget for Germny
+        Tests that we get the correct widget for Germany
         """
         german_form_class = form_factory("de")
         self.assertNotEqual(german_form_class, None)
@@ -47,6 +47,28 @@ class PostalTests(TestCase):
 
         self.assertEqual(form.fields['line1'].label.lower(), "street")
         self.assertEqual(form.fields.has_key('line2'), False)
+        self.assertEqual(form.fields['city'].label.lower(), "city")
+        self.assertEqual(form.fields['code'].label.lower(), "zip code")
+
+    def test_get_it_address(self):
+        """
+        Tests that we get the correct widget for Italy
+        """
+        italian_form_class = form_factory("it")
+        self.assertNotEqual(italian_form_class, None)
+
+        # only use required fields
+        test_data = {
+            'street': 'Piazza Duomo',
+            'code': '20100',
+            'city': 'Milano',
+            'state': 'MI'
+        }
+        form = italian_form_class(data=test_data)
+
+        self.assertEqual(form.fields['line1'].label.lower(), "street")
+        self.assertEqual(form.fields['line2'].label.lower(), "area")
+        self.assertEqual(form.fields['state'].label.lower(), "province")
         self.assertEqual(form.fields['city'].label.lower(), "city")
         self.assertEqual(form.fields['code'].label.lower(), "zip code")
 
