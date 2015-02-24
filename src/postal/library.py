@@ -7,6 +7,7 @@ from postal.forms.cz.forms import CZPostalAddressForm
 from postal.forms.de.forms import DEPostalAddressForm
 from postal.forms.gb.forms import GBPostalAddressForm
 from postal.forms.ie.forms import IEPostalAddressForm
+from postal.forms.it.forms import ITPostalAddressForm
 from postal.forms.mx.forms import MXPostalAddressForm
 from postal.forms.nl.forms import NLPostalAddressForm
 from postal.forms.pl.forms import PLPostalAddressForm
@@ -20,6 +21,7 @@ country_map = {
     "de": DEPostalAddressForm,
     "gb": GBPostalAddressForm,
     "ie": IEPostalAddressForm,
+    "it": ITPostalAddressForm,
     "mx": MXPostalAddressForm,
     "nl": NLPostalAddressForm,
     "pl": PLPostalAddressForm,

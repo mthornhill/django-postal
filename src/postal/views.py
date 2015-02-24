@@ -1,9 +1,12 @@
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.template.loader import render_to_string
-from django.utils import simplejson
-
+try:
+    from django.utils import simplejson
+except ImportError:
+    import json as simplejson
 from postal.library import form_factory
+
 
 def address_inline(request, prefix="", country_code=None, template_name="postal/form.html"):
     """ Displays postal address with localized fields """

@@ -15,3 +15,5 @@ src/*.egg-info
 .settings
 pysqlite2-doc
 distribute*
+.idea
+.Python
