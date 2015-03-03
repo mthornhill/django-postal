@@ -11,7 +11,7 @@ setup(
     url='http://github.com/mthornhill/django-postal',
     license='BSD',
     description="A Django app for l10n of postal addresses.",
-    long_description=read('README'),
+    long_description=read('README.rst'),
 
     author='Michael Thornhill',
     author_email='michael@maithu.com',
