@@ -112,6 +112,12 @@ the field is required or not, e.g.::
 BUILD HISTORY
 =============
 
+0.9.6
+Remove django-piston requirement
+Fixed django 1.7 compatibility issues
+Added Italian Postal Address Form
+(Thanks to Francesco Facconi for above changes)
+
 0.7.2
 Major refactor where all models removed so django-postal just provides localized forms.
 It is up to the supporting project to define their own address models
