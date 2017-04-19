@@ -15,4 +15,4 @@ class ITPostalAddressForm(PostalAddressForm):
     def __init__(self, *args, **kwargs):
         super(ITPostalAddressForm, self).__init__(*args, **kwargs)
         self.fields['country'].initial = "IT"
-        self.fields.keyOrder = ['line1', 'line2', 'code', 'city', 'state', 'country']
+        self.fields = OrderedDict((k, self.fields[k]) for k in ['line1', 'line2', 'code', 'city', 'state', 'country'])

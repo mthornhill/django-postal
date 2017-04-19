@@ -1,8 +1,12 @@
+from collections import OrderedDict
+
 from django import forms
 from django.utils.translation import ugettext_lazy as _
+
 from localflavor.de.forms import DEZipCodeField
 
 from postal.forms import PostalAddressForm
+
 
 class DEPostalAddressForm(PostalAddressForm):
     line1 = forms.CharField(label=_(u"Street"), max_length=100)
@@ -14,4 +18,4 @@ class DEPostalAddressForm(PostalAddressForm):
         self.fields.pop('line2')
         self.fields.pop('state')
         self.fields['country'].initial = "DE"
-        self.fields.keyOrder = ['line1', 'code', 'city', 'country']
+        self.fields = OrderedDict((k, self.fields[k]) for k in ['line1', 'code', 'city', 'country'])

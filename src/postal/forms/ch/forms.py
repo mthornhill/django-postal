@@ -16,4 +16,4 @@ class CHPostalAddressForm(PostalAddressForm):
         self.fields.pop('line2')
         self.fields.pop('state')
         self.fields['country'].initial = "CH"
-        self.fields.keyOrder = ['line1', 'code', 'city', 'country']
+        self.fields = OrderedDict((k, self.fields[k]) for k in ['line1', 'code', 'city', 'country'])
