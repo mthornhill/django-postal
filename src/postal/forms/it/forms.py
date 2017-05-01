@@ -1,4 +1,6 @@
 """ http://www.bitboost.com/ref/international-address-formats.html """
+from collections import OrderedDict
+
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from localflavor.it.forms import ITProvinceSelect, ITZipCodeField
