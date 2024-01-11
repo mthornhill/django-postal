@@ -15,6 +15,7 @@ class HandlerMetaClass(type):
     Metaclass that keeps a registry of class -> handler
     mappings.
     """
+
     def __new__(mcs, name, bases, attrs):
         new_mcs = type.__new__(mcs, name, bases, attrs)
 
@@ -23,17 +24,19 @@ class HandlerMetaClass(type):
                 if model == m and anon == a:
                     return k
 
-        if hasattr(new_mcs, 'model'):
+        if hasattr(new_mcs, "model"):
             if already_registered(new_mcs.model, new_mcs.is_anonymous):
-                if not getattr(settings, 'PISTON_IGNORE_DUPE_MODELS', False):
-                    warnings.warn("Handler already registered for model %s, "
-                                  "you may experience inconsistent results." % new_mcs.model.__name__)
+                if not getattr(settings, "PISTON_IGNORE_DUPE_MODELS", False):
+                    warnings.warn(
+                        "Handler already registered for model %s, "
+                        "you may experience inconsistent results." % new_mcs.model.__name__
+                    )
 
             typemapper[new_mcs] = (new_mcs.model, new_mcs.is_anonymous)
         else:
             typemapper[new_mcs] = (None, new_mcs.is_anonymous)
 
-        if name not in ('BaseHandler', ):
+        if name not in ("BaseHandler",):
             handler_tracker.append(new_mcs)
 
         return new_mcs
@@ -49,18 +52,19 @@ class BaseHandler(object):
     receive a request as the first argument from the
     resource. Use this for checking `request.user`, etc.
     """
+
     __metaclass__ = HandlerMetaClass
 
-    allowed_methods = ('GET', 'POST', 'PUT', 'DELETE')
+    allowed_methods = ("GET", "POST", "PUT", "DELETE")
     anonymous = is_anonymous = False
-    exclude = ('id', )
+    exclude = ("id",)
     fields = ()
 
     def flatten_dict(self, dct):
         return dict([(str(k), dct.get(k)) for k in dct.keys()])
 
     def has_model(self):
-        return hasattr(self, 'model') or hasattr(self, 'queryset')
+        return hasattr(self, "model") or hasattr(self, "queryset")
 
     def queryset(self, request):
         return self.model.objects.all()
@@ -92,7 +96,7 @@ class BaseHandler(object):
                 return self.queryset(request).get(pk=kwargs.get(pkfield))
             except ObjectDoesNotExist:
                 return rc.NOT_FOUND
-            except MultipleObjectsReturned: # should never happen, since we're using a PK
+            except MultipleObjectsReturned:  # should never happen, since we're using a PK
                 return rc.BAD_REQUEST
         else:
             return self.queryset(request).filter(*args, **kwargs)
@@ -127,12 +131,12 @@ class BaseHandler(object):
             inst = self.queryset(request).get(pk=kwargs.get(pkfield))
         except ObjectDoesNotExist:
             return rc.NOT_FOUND
-        except MultipleObjectsReturned: # should never happen, since we're using a PK
+        except MultipleObjectsReturned:  # should never happen, since we're using a PK
             return rc.BAD_REQUEST
 
         attrs = self.flatten_dict(request.data)
-        for k,v in attrs.iteritems():
-            setattr( inst, k, v )
+        for k, v in attrs.iteritems():
+            setattr(inst, k, v)
 
         inst.save()
         return rc.ALL_OK

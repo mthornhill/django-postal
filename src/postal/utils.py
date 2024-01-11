@@ -6,29 +6,31 @@ from django.http import HttpResponse
 
 
 def format_error(error):
-    return u"Postal (Django %s) crash report:\n\n%s" % \
-        (django_version(), error)
+    return "Postal (Django %s) crash report:\n\n%s" % (django_version(), error)
 
 
 class RcFactory(object):
     """
     Status codes.
     """
-    CODES = dict(ALL_OK = ('OK', 200),
-                 CREATED = ('Created', 201),
-                 DELETED = ('', 204),  # 204 says "Don't send a body!"
-                 BAD_REQUEST = ('Bad Request', 400),
-                 FORBIDDEN = ('Forbidden', 401),
-                 NOT_FOUND = ('Not Found', 404),
-                 DUPLICATE_ENTRY = ('Conflict/Duplicate', 409),
-                 NOT_HERE = ('Gone', 410),
-                 INTERNAL_ERROR = ('Internal Error', 500),
-                 NOT_IMPLEMENTED = ('Not Implemented', 501),
-                 THROTTLED = ('Throttled', 503))
+
+    CODES = dict(
+        ALL_OK=("OK", 200),
+        CREATED=("Created", 201),
+        DELETED=("", 204),  # 204 says "Don't send a body!"
+        BAD_REQUEST=("Bad Request", 400),
+        FORBIDDEN=("Forbidden", 401),
+        NOT_FOUND=("Not Found", 404),
+        DUPLICATE_ENTRY=("Conflict/Duplicate", 409),
+        NOT_HERE=("Gone", 410),
+        INTERNAL_ERROR=("Internal Error", 500),
+        NOT_IMPLEMENTED=("Not Implemented", 501),
+        THROTTLED=("Throttled", 503),
+    )
 
     def __getattr__(self, attr):
         """
-        Returns a fresh `HttpResponse` when getting 
+        Returns a fresh `HttpResponse` when getting
         an "attribute". This is backwards compatible
         with 0.2, which is important.
         """
@@ -39,29 +41,31 @@ class RcFactory(object):
 
         class HttpResponseWrapper(HttpResponse):
             """
-            Wrap HttpResponse and make sure that the internal _is_string 
-            flag is updated when the _set_content method (via the content 
+            Wrap HttpResponse and make sure that the internal _is_string
+            flag is updated when the _set_content method (via the content
             property) is called
             """
+
             def _set_content(self, content):
                 """
-                Set the _container and _is_string properties based on the 
+                Set the _container and _is_string properties based on the
                 type of the value parameter. This logic is in the construtor
-                for HttpResponse, but doesn't get repeated when setting 
+                for HttpResponse, but doesn't get repeated when setting
                 HttpResponse.content although this bug report (feature request)
-                suggests that it should: http://code.djangoproject.com/ticket/9403 
+                suggests that it should: http://code.djangoproject.com/ticket/9403
                 """
-                if not isinstance(content, basestring) and hasattr(content, '__iter__'):
+                if not isinstance(content, basestring) and hasattr(content, "__iter__"):
                     self._container = content
                     self._is_string = False
                 else:
                     self._container = [content]
                     self._is_string = True
 
-            content = property(HttpResponse._get_content, _set_content)            
+            content = property(HttpResponse._get_content, _set_content)
 
-        return HttpResponseWrapper(r, content_type='text/plain', status=c)
-    
+        return HttpResponseWrapper(r, content_type="text/plain", status=c)
+
+
 rc = RcFactory()
 
 
@@ -96,7 +100,7 @@ def coerce_put_post(request):
         # the first time _load_post_and_files is called (both by wsgi.py and
         # modpython.py). If it's set, the request has to be 'reset' to redo
         # the query value parsing in POST mode.
-        if hasattr(request, '_post'):
+        if hasattr(request, "_post"):
             del request._post
             del request._files
 
@@ -105,9 +109,9 @@ def coerce_put_post(request):
             request._load_post_and_files()
             request.method = "PUT"
         except AttributeError:
-            request.META['REQUEST_METHOD'] = 'POST'
+            request.META["REQUEST_METHOD"] = "POST"
             request._load_post_and_files()
-            request.META['REQUEST_METHOD'] = 'PUT'
+            request.META["REQUEST_METHOD"] = "PUT"
 
         request.PUT = request.POST
 
@@ -116,6 +120,7 @@ class MimerDataException(Exception):
     """
     Raised if the content_type and data don't match
     """
+
     pass
 
 
@@ -129,7 +134,7 @@ class Mimer(object):
         content_type = self.content_type()
 
         if content_type is not None:
-            return content_type.lstrip().startswith('multipart')
+            return content_type.lstrip().startswith("multipart")
 
         return False
 
@@ -150,7 +155,7 @@ class Mimer(object):
         """
         type_formencoded = "application/x-www-form-urlencoded"
 
-        ctype = self.request.META.get('CONTENT_TYPE', type_formencoded)
+        ctype = self.request.META.get("CONTENT_TYPE", type_formencoded)
 
         if type_formencoded in ctype:
             return None

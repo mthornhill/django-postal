@@ -2,19 +2,19 @@
 from collections import OrderedDict
 
 from django import forms
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from localflavor.it.forms import ITProvinceSelect, ITZipCodeField
 from postal.forms import PostalAddressForm
 
 
 class ITPostalAddressForm(PostalAddressForm):
-    line1 = forms.CharField(label=_(u"Street"), max_length=50)
-    line2 = forms.CharField(label=_(u"Area"), required=False, max_length=100)
-    city = forms.CharField(label=_(u"City"), max_length=50)
-    state = forms.CharField(label=_(u"Province"), widget=ITProvinceSelect)
-    code = ITZipCodeField(label=_(u"Zip Code"))
+    line1 = forms.CharField(label=_("Street"), max_length=50)
+    line2 = forms.CharField(label=_("Area"), required=False, max_length=100)
+    city = forms.CharField(label=_("City"), max_length=50)
+    state = forms.CharField(label=_("Province"), widget=ITProvinceSelect)
+    code = ITZipCodeField(label=_("Zip Code"))
 
     def __init__(self, *args, **kwargs):
         super(ITPostalAddressForm, self).__init__(*args, **kwargs)
-        self.fields['country'].initial = "IT"
-        self.fields = OrderedDict((k, self.fields[k]) for k in ['line1', 'line2', 'code', 'city', 'state', 'country'])
+        self.fields["country"].initial = "IT"
+        self.fields = OrderedDict((k, self.fields[k]) for k in ["line1", "line2", "code", "city", "state", "country"])

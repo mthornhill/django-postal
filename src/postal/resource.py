@@ -34,9 +34,11 @@ class Emitter(object):
     method detection came, and we accidentially caught these
     as the methods on the handler. Issue58 says that's no good.
     """
-    EMITTERS = { }
-    RESERVED_FIELDS = set(['read', 'update', 'create', 'delete', 'model', 'anonymous',
-                           'allowed_methods', 'fields', 'exclude'])
+
+    EMITTERS = {}
+    RESERVED_FIELDS = set(
+        ["read", "update", "create", "delete", "model", "anonymous", "allowed_methods", "fields", "exclude"]
+    )
 
     def __init__(self, payload, c_typemapper, handler, fields=(), anonymous=True):
         self.typemapper = c_typemapper
@@ -70,6 +72,7 @@ class Emitter(object):
 
         Returns `dict`.
         """
+
         def _any(thing, fields=None):
             """
             Dispatch, all types are routed through here.
@@ -91,7 +94,7 @@ class Emitter(object):
             elif inspect.isfunction(thing):
                 if not inspect.getargspec(thing)[0]:
                     ret = _any(thing())
-            elif hasattr(thing, '__emittable__'):
+            elif hasattr(thing, "__emittable__"):
                 f = thing.__emittable__
                 if inspect.ismethod(f) and len(inspect.getargspec(f)[0]) == 1:
                     ret = _any(f())
@@ -112,20 +115,20 @@ class Emitter(object):
             """
             Foreign keys.
             """
-            return [ _model(m, fields) for m in data.iterator() ]
+            return [_model(m, fields) for m in data.iterator()]
 
         def _m2m(data, field, fields=None):
             """
             Many to many (re-route to `_model`.)
             """
-            return [ _model(m, fields) for m in getattr(data, field.name).iterator() ]
+            return [_model(m, fields) for m in getattr(data, field.name).iterator()]
 
         def _model(data, fields=None):
             """
             Models. Will respect the `fields` and/or
             `exclude` on the handler (see `typemapper`.)
             """
-            ret = { }
+            ret = {}
             handler = self.in_typemapper(type(data), self.anonymous)
             get_absolute_uri = False
 
@@ -133,9 +136,9 @@ class Emitter(object):
                 v = lambda f: getattr(data, f.attname)
 
                 if handler:
-                    fields = getattr(handler, 'fields')
+                    fields = getattr(handler, "fields")
 
-                if not fields or hasattr(handler, 'fields'):
+                if not fields or hasattr(handler, "fields"):
                     """
                     Fields was not specified, try to find teh correct
                     version in the typemapper we were sent.
@@ -144,14 +147,15 @@ class Emitter(object):
                     get_fields = set(mapped.fields)
                     exclude_fields = set(mapped.exclude).difference(get_fields)
 
-                    if 'absolute_uri' in get_fields:
+                    if "absolute_uri" in get_fields:
                         get_absolute_uri = True
 
                     if not get_fields:
-                        get_fields = set([ f.attname.replace("_id", "", 1)
-                            for f in data._meta.fields + data._meta.virtual_fields])
+                        get_fields = set(
+                            [f.attname.replace("_id", "", 1) for f in data._meta.fields + data._meta.virtual_fields]
+                        )
 
-                    if hasattr(mapped, 'extra_fields'):
+                    if hasattr(mapped, "extra_fields"):
                         get_fields.update(mapped.extra_fields)
 
                     # sets can be negated.
@@ -170,7 +174,7 @@ class Emitter(object):
                 met_fields = self.method_fields(handler, get_fields)
 
                 for f in data._meta.local_fields + data._meta.virtual_fields:
-                    if f.serialize and not any([ p in met_fields for p in [ f.attname, f.name ]]):
+                    if f.serialize and not any([p in met_fields for p in [f.attname, f.name]]):
                         if not f.rel:
                             if f.attname in get_fields:
                                 ret[f.attname] = _any(v(f))
@@ -193,7 +197,7 @@ class Emitter(object):
                         inst = getattr(data, model, None)
 
                         if inst:
-                            if hasattr(inst, 'all'):
+                            if hasattr(inst, "all"):
                                 ret[model] = _related(inst, fields)
                             elif callable(inst):
                                 if len(inspect.getargspec(inst)[0]) == 1:
@@ -234,24 +238,24 @@ class Emitter(object):
             # resouce uri
             if self.in_typemapper(type(data), self.anonymous):
                 handler = self.in_typemapper(type(data), self.anonymous)
-                if hasattr(handler, 'resource_uri'):
+                if hasattr(handler, "resource_uri"):
                     url_id, fields = handler.resource_uri(data)
 
                     try:
-                        ret['resource_uri'] = permalink(lambda: (url_id, fields))()
-                    except NoReverseMatch, e:
+                        ret["resource_uri"] = permalink(lambda: (url_id, fields))()
+                    except NoReverseMatch:
                         pass
 
-            if hasattr(data, 'get_api_url') and 'resource_uri' not in ret:
+            if hasattr(data, "get_api_url") and "resource_uri" not in ret:
                 try:
-                    ret['resource_uri'] = data.get_api_url()
+                    ret["resource_uri"] = data.get_api_url()
                 except:
                     pass
 
             # absolute uri
-            if hasattr(data, 'get_absolute_url') and get_absolute_uri:
+            if hasattr(data, "get_absolute_url") and get_absolute_uri:
                 try:
-                    ret['absolute_uri'] = data.get_absolute_url()
+                    ret["absolute_uri"] = data.get_absolute_url()
                 except:
                     pass
 
@@ -261,13 +265,13 @@ class Emitter(object):
             """
             Querysets.
             """
-            return [_any(v, fields) for v in data ]
+            return [_any(v, fields) for v in data]
 
         def _list(data, fields=None):
             """
             Lists.
             """
-            return [_any(v, fields) for v in data ]
+            return [_any(v, fields) for v in data]
 
         def _dict(data, fields=None):
             """
@@ -310,7 +314,7 @@ class Emitter(object):
         raise ValueError("No emitters found for type %s" % format)
 
     @classmethod
-    def register(cls, name, klass, content_type='text/plain'):
+    def register(cls, name, klass, content_type="text/plain"):
         """
         Register an emitter.
 
@@ -339,10 +343,10 @@ class HandlerMethod(object):
         args, _, _, defaults = inspect.getargspec(self.method)
 
         for idx, arg in enumerate(args):
-            if arg in ('self', 'request', 'form'):
+            if arg in ("self", "request", "form"):
                 continue
 
-            didx = len(args)-idx
+            didx = len(args) - idx
 
             if defaults and len(defaults) >= didx:
                 yield (arg, str(defaults[-didx]))
@@ -357,9 +361,9 @@ class HandlerMethod(object):
             spec += argn
 
             if argdef:
-                spec += '=%s' % argdef
+                spec += "=%s" % argdef
 
-            spec += ', '
+            spec += ", "
 
         spec = spec.rstrip(", ")
 
@@ -378,14 +382,14 @@ class HandlerMethod(object):
 
     @property
     def http_name(self):
-        if self.name == 'read':
-            return 'GET'
-        elif self.name == 'create':
-            return 'POST'
-        elif self.name == 'delete':
-            return 'DELETE'
-        elif self.name == 'update':
-            return 'PUT'
+        if self.name == "read":
+            return "GET"
+        elif self.name == "create":
+            return "POST"
+        elif self.name == "delete":
+            return "DELETE"
+        elif self.name == "update":
+            return "PUT"
 
     def __repr__(self):
         return "<Method: %s>" % self.name
@@ -404,15 +408,15 @@ class Resource(object):
     is an authentication handler. If not specified,
     `NoAuthentication` will be used by default.
     """
-    callmap = {'GET': 'read', 'POST': 'create',
-               'PUT': 'update', 'DELETE': 'delete'}
+
+    callmap = {"GET": "read", "POST": "create", "PUT": "update", "DELETE": "delete"}
 
     def __init__(self, handler, authentication=None):
         if not callable(handler):
-            raise AttributeError, "Handler not callable."
+            raise AttributeError("Handler not callable.")
 
         self.handler = handler()
-        self.csrf_exempt = getattr(self.handler, 'csrf_exempt', True)
+        self.csrf_exempt = getattr(self.handler, "csrf_exempt", True)
 
         if not authentication:
             self.authentication = (NoAuthentication(),)
@@ -422,9 +426,9 @@ class Resource(object):
             self.authentication = (authentication,)
 
         # Erroring
-        self.email_errors = getattr(settings, 'PISTON_EMAIL_ERRORS', True)
-        self.display_errors = getattr(settings, 'PISTON_DISPLAY_ERRORS', True)
-        self.stream = getattr(settings, 'PISTON_STREAM_OUTPUT', False)
+        self.email_errors = getattr(settings, "PISTON_EMAIL_ERRORS", True)
+        self.display_errors = getattr(settings, "PISTON_DISPLAY_ERRORS", True)
+        self.stream = getattr(settings, "PISTON_STREAM_OUTPUT", False)
 
     def determine_emitter(self, request, *args, **kwargs):
         """
@@ -436,21 +440,21 @@ class Resource(object):
         since that pretty much makes sense. Refer to `Mimer` for
         that as well.
         """
-        em = kwargs.pop('emitter_format', None)
+        em = kwargs.pop("emitter_format", None)
 
         if not em:
-            em = request.GET.get('format', 'json')
+            em = request.GET.get("format", "json")
 
         return em
 
     def form_validation_response(self, e):
         """
-        Method to return form validation error information. 
+        Method to return form validation error information.
         You will probably want to override this in your own
         `Resource` subclass.
         """
         resp = rc.BAD_REQUEST
-        resp.write(' '+str(e.form.errors))
+        resp.write(" " + str(e.form.errors))
         return resp
 
     @property
@@ -461,7 +465,7 @@ class Resource(object):
         anonymous handlers that aren't defined yet (like, when
         you're subclassing your basehandler into an anonymous one.)
         """
-        if hasattr(self.handler, 'anonymous'):
+        if hasattr(self.handler, "anonymous"):
             anon = self.handler.anonymous
 
             if callable(anon):
@@ -478,9 +482,7 @@ class Resource(object):
 
         for authenticator in self.authentication:
             if not authenticator.is_authenticated(request):
-                if self.anonymous and \
-                    rm in self.anonymous.allowed_methods:
-
+                if self.anonymous and rm in self.anonymous.allowed_methods:
                     actor, anonymous = self.anonymous(), True
                 else:
                     actor, anonymous = authenticator.challenge, CHALLENGE
@@ -489,7 +491,7 @@ class Resource(object):
 
         return actor, anonymous
 
-    @vary_on_headers('Authorization')
+    @vary_on_headers("Authorization")
     def __call__(self, request, *args, **kwargs):
         """
         NB: Sends a `Vary` header so we don't cache requests
@@ -510,13 +512,13 @@ class Resource(object):
             handler = actor
 
         # Translate nested datastructs into `request.data` here.
-        if rm in ('POST', 'PUT'):
+        if rm in ("POST", "PUT"):
             try:
                 translate_mime(request)
             except MimerDataException:
                 return rc.BAD_REQUEST
-            if not hasattr(request, 'data'):
-                if rm == 'POST':
+            if not hasattr(request, "data"):
+                if rm == "POST":
                     request.data = request.POST
                 else:
                     request.data = request.PUT
@@ -524,14 +526,14 @@ class Resource(object):
         if not rm in handler.allowed_methods:
             return HttpResponseNotAllowed(handler.allowed_methods)
 
-        meth = getattr(handler, self.callmap.get(rm, ''), None)
+        meth = getattr(handler, self.callmap.get(rm, ""), None)
         if not meth:
             raise Http404
 
         # Support emitter both through (?P<emitter_format>) and ?format=emitter.
         em_format = self.determine_emitter(request, *args, **kwargs)
 
-        kwargs.pop('emitter_format', None)
+        kwargs.pop("emitter_format", None)
 
         # Clean up the request object a bit, since we might
         # very well have `oauth_`-headers in there, and we
@@ -540,14 +542,14 @@ class Resource(object):
 
         try:
             result = meth(request, *args, **kwargs)
-        except Exception, e:
+        except Exception as e:
             result = self.error_handler(e, request, meth, em_format)
 
         try:
             emitter, ct = Emitter.get(em_format)
             fields = handler.fields
 
-            if hasattr(handler, 'list_fields') and isinstance(result, (list, tuple, QuerySet)):
+            if hasattr(handler, "list_fields") and isinstance(result, (list, tuple, QuerySet)):
                 fields = handler.list_fields
         except ValueError:
             result = rc.BAD_REQUEST
@@ -557,15 +559,15 @@ class Resource(object):
         status_code = 200
 
         # If we're looking at a response object which contains non-string
-        # content, then assume we should use the emitter to format that 
+        # content, then assume we should use the emitter to format that
         # content
         if isinstance(result, HttpResponse) and not result._is_string:
             status_code = result.status_code
             # Note: We can't use result.content here because that method attempts
-            # to convert the content into a string which we don't want. 
+            # to convert the content into a string which we don't want.
             # when _is_string is False _container is the raw data
             result = result._container
-     
+
         srl = emitter(result, typemapper, handler, fields, anonymous)
 
         try:
@@ -575,8 +577,10 @@ class Resource(object):
             before sending it to the client. Won't matter for
             smaller datasets, but larger will have an impact.
             """
-            if self.stream: stream = srl.stream_render(request)
-            else: stream = srl.render(request)
+            if self.stream:
+                stream = srl.stream_render(request)
+            else:
+                stream = srl.render(request)
 
             if not isinstance(stream, HttpResponse):
                 resp = HttpResponse(stream, mimetype=ct, status=status_code)
@@ -586,7 +590,7 @@ class Resource(object):
             resp.streaming = self.stream
 
             return resp
-        except HttpStatusCode, e:
+        except HttpStatusCode as e:
             return e.response
 
     @staticmethod
@@ -595,10 +599,10 @@ class Resource(object):
         Removes `oauth_` keys from various dicts on the
         request object, and returns the sanitized version.
         """
-        for method_type in ('GET', 'PUT', 'POST', 'DELETE'):
-            block = getattr(request, method_type, { })
+        for method_type in ("GET", "PUT", "POST", "DELETE"):
+            block = getattr(request, method_type, {})
 
-            if True in [ k.startswith("oauth_") for k in block.keys() ]:
+            if True in [k.startswith("oauth_") for k in block.keys()]:
                 sanitized = block.copy()
 
                 for k in sanitized.keys():
@@ -615,17 +619,19 @@ class Resource(object):
         subject = "Piston crash report"
         html = reporter.get_traceback_html()
 
-        message = EmailMessage(settings.EMAIL_SUBJECT_PREFIX+subject,
-                                html, settings.SERVER_EMAIL,
-                                [ admin[1] for admin in settings.ADMINS ])
+        message = EmailMessage(
+            settings.EMAIL_SUBJECT_PREFIX + subject,
+            html,
+            settings.SERVER_EMAIL,
+            [admin[1] for admin in settings.ADMINS],
+        )
 
-        message.content_subtype = 'html'
+        message.content_subtype = "html"
         message.send(fail_silently=True)
-
 
     def error_handler(self, e, request, meth, em_format):
         """
-        Override this method to add handling of errors customized for your 
+        Override this method to add handling of errors customized for your
         needs
         """
         if isinstance(e, FormValidationError):
@@ -636,15 +642,15 @@ class Resource(object):
             hm = HandlerMethod(meth)
             sig = hm.signature
 
-            msg = 'Method signature does not match.\n\n'
+            msg = "Method signature does not match.\n\n"
 
             if sig:
-                msg += 'Signature should be: %s' % sig
+                msg += "Signature should be: %s" % sig
             else:
-                msg += 'Resource does not expect any parameters.'
+                msg += "Resource does not expect any parameters."
 
             if self.display_errors:
-                msg += '\n\nException was: %s' % str(e)
+                msg += "\n\nException was: %s" % str(e)
 
             result.content = format_error(msg)
             return result
@@ -653,8 +659,8 @@ class Resource(object):
 
         elif isinstance(e, HttpStatusCode):
             return e.response
- 
-        else: 
+
+        else:
             """
             On errors (like code errors), we'd like to be able to
             give crash reports to both admins and also the calling
@@ -674,7 +680,6 @@ class Resource(object):
             if self.email_errors:
                 self.email_exception(rep)
             if self.display_errors:
-                return HttpResponseServerError(
-                    format_error('\n'.join(rep.format_exception())))
+                return HttpResponseServerError(format_error("\n".join(rep.format_exception())))
             else:
                 raise

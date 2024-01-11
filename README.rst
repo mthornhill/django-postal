@@ -20,7 +20,7 @@ Further information on each address line can be gleaned from
 ``django.contrib.localflavor`` fields and widgets e.g. for the UK ::
 
     from django import forms
-    from django.utils.translation import ugettext_lazy as _
+    from django.utils.translation import gettext_lazy as _
     from django.contrib.localflavor.uk.forms import UKPostcodeField, UKCountySelect
 
     from postal.forms import PostalAddressForm
